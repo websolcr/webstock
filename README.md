@@ -7,6 +7,8 @@ This is the web based application which can capble to maange stocks. Currently u
 clone the repository.
 
 Copy `.env.example` to `.env`.
+Set APP_URL
+>APP_URL=http://localhost:8000
 
 Generate application key.
 >php artisan key:generate
@@ -14,13 +16,16 @@ Generate application key.
 Create database `webstock` for application.
 Create database `webstock_test` for testing purposes.
 
-Set database credentials in `.env`
+Set database credentials in `.env`.
 
-Migrate the database,
+Migrate the database.
 >php artisan migrate:seed
 
-Install dependencies 
+Install dependencies.
 >composer install
+
+Serve Backend.
+>php artisan serve
 
 Install node modules from project root.
 >npm install
@@ -29,5 +34,5 @@ Change directory to `/resourses/frontend`.
 Install node modules.
 >npm install
 
-Serve the frontend application
->npm run build.
+Serve frontend.
+>npm run build
