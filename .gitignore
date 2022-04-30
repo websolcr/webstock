@@ -16,3 +16,4 @@ yarn-error.log
 /public/js
 .php-cs-fixer.cache
 /storage/clockwork
+/resources/frontend/node_modules

@@ -26,5 +26,11 @@ Change directory to `/resourses/frontend`.
 Install node modules.
 >npm install
 
+Config frontend development server in `resources/frontend/vue.config.js`
+>host: 'app.<<put_your_host_in_here_without_port>>'
+
+Set host
+>sudo nano /etc/hosts ==> `127.0.0.1     app.<<domain>>`
+
 Serve the frontend application
->npm run build.
+>npm run serve.
