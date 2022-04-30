@@ -19,6 +19,9 @@ Set database credentials in `.env`
 Migrate the database,
 >php artisan migrate:seed
 
+Install dependencies 
+>composer install
+
 Install node modules from project root.
 >npm install
 
