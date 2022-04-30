@@ -19,6 +19,9 @@ Set database credentials in `.env`
 Migrate the database,
 >php artisan migrate:seed
 
+Migrate the test database
+>php artisan migrate:fresh --database=mysql_test
+
 Install node modules from project root.
 >npm install
 
