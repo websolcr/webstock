@@ -27,6 +27,9 @@ Install dependencies.
 Serve Backend.
 >php artisan serve
 
+Migrate the test database
+>php artisan migrate:fresh --database=mysql_test
+
 Install node modules from project root.
 >npm install
 

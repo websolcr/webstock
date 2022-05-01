@@ -1,0 +1,76 @@
+name: Test Suite
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test application
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: webstock_test
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP, with Composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: pcov
+
+      - name: Start mysql service
+        run: sudo systemctl start mysql
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-scripts
+
+      - name: Prepare the application
+        run: |
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php artisan key:generate
+
+      - name: Clear config
+        run: php artisan config:clear
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Build Vue application
+        run: |
+          cd resources/frontend
+          npm ci
+          npm run build
+          rm -rf node_modules
+
+      - name: Test with PHPUnit
+        run: |
+          php artisan migrate:fresh --database=mysql_test
+          php artisan test --coverage-html tests/coverage
+        env:
+          DB_USERNAME: root
+          DB_PASSWORD: password
+          DB_DATABASE: webstock_test
+          DB_DATABASE_TEST: webstock_test
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
