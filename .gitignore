@@ -14,5 +14,5 @@ yarn-error.log
 /.vscode
 /public/css
 /public/js
-PULL_REQUEST_TEMPLATE.md
-/storage/logs
+.php-cs-fixer.cache
+/storage/clockwork
