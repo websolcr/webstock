@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V3</title>
+    <title>{{config('app.name')}}</title>
 </head>
 <body>
 <div>
     @if($errors->any())
-        {{ implode('', $errors->all('<div>:message</div>')) }}
+        {{$errors}}
     @endif
     <form action="/register" method="post">
         @csrf

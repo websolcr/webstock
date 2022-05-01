@@ -1,13 +1,67 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div>
+    <img
+      alt="Vue logo"
+      src="./assets/logo.png"
+    >
+    <HelloWorld
+      msg="Click here..."
+      @click="logout"
+    />
+
+    <p @click="test">adkabdd</p>
+  </div>
 </template>
+
+<script>
+import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
+
+axios.defaults.baseURL=process.env.APP_URL
+
+export default {
+  name: 'App',
+  components: {
+    HelloWorld
+  },
+
+  data() {
+    return {
+      testData: [],
+    }
+},
+
+  created() {
+    this.testFUnction()
+  },
+
+  methods: {
+    async testFUnction() {
+      const {data} = await axios.get('api/test')
+      this.testData = data
+
+      console.log(this.testData)
+    },
+
+    test() {
+      axios.get('api/test').then(r => console.log(r))
+    },
+
+    logout(reason = '') {
+      const form = document.getElementById('logout-form')
+
+      const input = document.createElement('input')
+      input.setAttribute('type', 'hidden')
+      input.setAttribute('name', 'reason')
+      input.setAttribute('value', reason)
+
+      form.appendChild(input)
+
+      form.submit()
+    },
+  }
+}
+</script>
 
 <style>
 #app {

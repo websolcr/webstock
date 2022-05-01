@@ -4,7 +4,6 @@
 /storage/*.key
 /vendor
 .env
-.env.backup
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -16,3 +15,6 @@ yarn-error.log
 /public/js
 .php-cs-fixer.cache
 /storage/clockwork
+/resources/frontend/dist
+/resources/frontend/node_modules
+.editorconfig

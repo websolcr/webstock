@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SPAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,15 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-Route::get('/login', function () {
-    return view('authentication.login');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', function () {
+        return view('authentication.login');
+    })->name('login');
+
+    Route::get('/register', function () {
+        return view('authentication.register');
+    });
 });
 
-Route::get('/register', function () {
-    return view('authentication.register');
-});
-
-
+Route::get('/{any}', SPAController::class)->where('any', '^(?!api).*$')->middleware('auth');

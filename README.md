@@ -27,4 +27,4 @@ Install node modules.
 >npm install
 
 Serve the frontend application
->npm run build.
+>npm run build -- --watch
