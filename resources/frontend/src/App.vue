@@ -4,14 +4,11 @@
       alt="Vue logo"
       src="./assets/logo.png"
     >
+    <pre>{{ user }}</pre>
     <HelloWorld
       msg="Click here to logout..."
       @click="logout"
     />
-
-    <p @click="test">
-      adkabdd
-    </p>
   </div>
 </template>
 
@@ -24,24 +21,13 @@ export default {
     HelloWorld
   },
 
-  data() {
-    return {
-      testData: [],
-    }
-},
-
   created() {
-    this.testFUnction()
+    this.syncAuthenticatedUser()
   },
 
   methods: {
-    async testFUnction() {
-      const {data} = await this.$http.get('/test')
-      this.testData = data
-    },
-
-    test() {
-      this.$http.get('/test')
+    async syncAuthenticatedUser() {
+      await this.$store.dispatch('fetchAuthenticatedUser')
     },
 
     logout() {
