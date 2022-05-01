@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SPAController;
+use App\Http\Controllers\AuthenticationController;
 
 Route::get('/', function () {
     return redirect()->route('login');
