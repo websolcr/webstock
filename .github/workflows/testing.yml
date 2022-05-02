@@ -1,4 +1,4 @@
-name: Test Suite
+name: API Testing
 on: [push, pull_request]
 
 jobs:
@@ -51,18 +51,6 @@ jobs:
 
       - name: Clear config
         run: php artisan config:clear
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Build Vue application
-        run: |
-          cd resources/frontend
-          npm ci
-          npm run build
-          rm -rf node_modules
 
       - name: Test with PHPUnit
         run: |

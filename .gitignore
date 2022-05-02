@@ -20,3 +20,4 @@ yarn-error.log
 .editorconfig
 /resources/frontend/package-lock.json
 /resources/views/index.blade.php
+/tests/coverage
