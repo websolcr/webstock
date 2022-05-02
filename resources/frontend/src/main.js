@@ -3,9 +3,11 @@ import App from './App.vue'
 import axios from "axios"
 import store from "@/store"
 
+import './index.css'
+
 const axiosInstance = axios.create({
-    withCredentials: true,
-    baseURL: '/api',
+  withCredentials: true,
+  baseURL: '/api',
 })
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
