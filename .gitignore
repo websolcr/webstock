@@ -19,3 +19,4 @@ yarn-error.log
 /resources/frontend/node_modules
 .editorconfig
 /resources/frontend/package-lock.json
+/resources/views/index.blade.php

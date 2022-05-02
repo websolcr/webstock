@@ -17,10 +17,6 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import axios from 'axios'
-
-axios.defaults.baseURL=process.env.APP_URL
-axios.defaults.withCredentials = true
 
 export default {
   name: 'App',
@@ -40,26 +36,16 @@ export default {
 
   methods: {
     async testFUnction() {
-      const {data} = await axios.get('api/test')
+      const {data} = await this.$http.get('/test')
       this.testData = data
-
-      console.log(this.testData)
     },
 
     test() {
-      axios.get('api/test').then(r => console.log(r))
+      this.$http.get('/test')
     },
 
-    logout(reason = '') {
+    logout() {
       const form = document.getElementById('logout-form')
-
-      const input = document.createElement('input')
-      input.setAttribute('type', 'hidden')
-      input.setAttribute('name', 'reason')
-      input.setAttribute('value', reason)
-
-      form.appendChild(input)
-
       form.submit()
     },
   }
