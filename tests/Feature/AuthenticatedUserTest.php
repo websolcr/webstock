@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Organization;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -9,6 +10,7 @@ class AuthenticatedUserTest extends TestCase
 {
     private function login()
     {
+        dd(Organization::create());
         $this->actingAs(User::factory()->create());
     }
 
