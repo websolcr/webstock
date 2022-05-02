@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Listeners\CreateTenantForUser;
 use App\Listeners\SetTenantInSession;
-use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Support\Facades\Event;
+use App\Listeners\CreateTenantForUser;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

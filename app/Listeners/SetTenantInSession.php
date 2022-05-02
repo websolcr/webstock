@@ -13,6 +13,5 @@ class SetTenantInSession
 
     public function handle(Authenticated $event): void
     {
-
     }
 }

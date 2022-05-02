@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Models\Organization;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Organization;
 
 class AuthenticatedUserTest extends TestCase
 {
