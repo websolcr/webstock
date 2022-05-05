@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
+use Tests\TestCase;
 
 class AuthenticationViewTest extends TestCase
 {
@@ -14,28 +14,16 @@ class AuthenticationViewTest extends TestCase
     }
 
     /** @test */
-    public function can_show_register_pae()
+    public function can_show_register_page()
     {
         $this->get('/register')->assertViewIs('authentication.register');
     }
 
     /** @test */
-    public function user_will_unauthorized_when_trying_to_go_any_other_page_except_login_or_register()
-    {
-        $response = $this->get('/anyOtherUri');
-
-        $this->assertEquals('Unauthenticated.', $response->exception->getMessage());
-    }
-
-    /** @test */
-    public function user_will_redirect_when_trying_to_go_any_other_page_except_login_or_register()
+    public function it_will_render_frontend_application_when_authenticated_user_enter_any_url()
     {
         $this->actingAs(User::factory()->create());
 
-        $response = $this->get('/anyOtherUri');
-
-        $response->assertStatus(200);
-
-        $response->assertViewIs('index');
+        $this->get('/anyUrl')->assertViewIs('index');
     }
 }
