@@ -10,4 +10,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth')->group(function () {
     Route::get('myself', [AuthenticatedUserController::class, 'show']);
+    Route::get('tenant', [AuthenticatedUserController::class, 'activeTenant']);
 });

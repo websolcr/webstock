@@ -11,4 +11,9 @@ class AuthenticatedUserController extends Controller
     {
         return response()->json(auth()->user());
     }
+
+    public function activeTenant(): JsonResponse
+    {
+        return response()->json(tenant());
+    }
 }

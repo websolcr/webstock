@@ -2,25 +2,37 @@ import {createStore} from "vuex"
 import axios from "axios"
 
 const store = createStore({
-    state: {
-        user: {
-            data: {},
-        }
+  state: {
+    user: {
+      data: {},
     },
-    getters: {},
-    actions: {
-        async fetchAuthenticatedUser() {
-            const { data } = await axios.get('api/myself')
+    tenant: {},
+  },
+  getters: {},
+  actions: {
+    async fetchAuthenticatedUser() {
+      const { data } = await axios.get('api/myself')
 
-            store.commit('setUser', data)
-        }
+      store.commit('setUser', data)
     },
-    mutations: {
-        setUser(state, payload) {
-            state.user.data = { ...payload }
-        }
+
+    async fetchActiveTenant() {
+      const { data } = await axios.get('api/tenant')
+
+      store.commit('setTenant', data)
+    }
+  },
+
+  mutations: {
+    setUser(state, payload) {
+      state.user.data = { ...payload }
     },
-    modules: {},
+
+    setTenant(state, payload) {
+      state.tenant = { ...payload }
+    }
+  },
+  modules: {},
 })
 
 export default store
