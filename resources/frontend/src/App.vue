@@ -19,6 +19,7 @@
 <script>
 import AppLayout from "@/layout/AppLayout"
 import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
+
 export default {
   name: 'App',
 
@@ -37,6 +38,13 @@ export default {
   async created() {
     await this.fetchAuthenticatedUser()
     await this.setLayout()
+
+    if (!this.hasTenant) {
+      await this.$router.push({name: 'CreateOrganization'})
+      return
+    }
+
+    await this.$router.push({name: 'Home'})
   },
 
   methods: {

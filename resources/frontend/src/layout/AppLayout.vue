@@ -8,7 +8,7 @@
         Navbar
       </div>
       <div class="bg-gray-600 h-screen">
-        content
+        <router-view />
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
 <template>
-  <router-view />
+  <div>Home page</div>
 </template>
 
 <script>
 export default {
-  name: "WithoutTenantLayout"
+  name: "HomePage"
 }
 </script>
