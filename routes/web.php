@@ -10,7 +10,6 @@ Route::get('/', function () {
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticationController::class, 'login'])->name('login');
-
     Route::get('/register', [AuthenticationController::class, 'register'])->name('register');
 });
 

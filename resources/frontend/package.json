@@ -1,5 +1,5 @@
 {
-    "name": "frontend",
+    "name": "webstock",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -9,10 +9,10 @@
     },
     "dependencies": {
         "axios": "^0.25",
-        "core-js": "^3.8.3",
+        "core-js": "^3.22.4",
         "lodash": "^4.17.21",
         "lodash-es": "^4.17.21",
-        "vue": "^3.2.13",
+        "vue": "^3.2.33",
         "vue-router": "^4.0.13",
         "vue-wait": "^1.5.3",
         "vuex": "^4.0.2"

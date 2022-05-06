@@ -3,6 +3,7 @@ import {createVueWait} from "vue-wait"
 import App from './App.vue'
 import axios from "axios"
 import store from "@/store"
+import router from "@/routes"
 
 import './index.css'
 
@@ -17,7 +18,9 @@ const app = createApp(App)
 
 app.config.globalProperties.$http = { ...axiosInstance }
 app.config.globalProperties.$store = store
+app.config.globalProperties.$router = router
 
 app.use(store)
+app.use(router)
 app.use(createVueWait())
 app.mount('#app')
