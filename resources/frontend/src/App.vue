@@ -1,12 +1,11 @@
 <template>
   <div>
     <div
-      v-if="$wait.is('fetch-tenant')"
+      v-if="$wait.is('set-user')"
       class="bg-red-400 p-4"
     >
       loading ...
     </div>
-
     <div v-else>
       <p
         class="font-bold cursor-pointer p-4"
@@ -14,67 +13,39 @@
       >
         logout..
       </p>
-      <app-layout v-if="!!tenant.id" />
-      <without-tenant-layout v-else />
+      <router-view />
     </div>
   </div>
 </template>
+
 <script>
-import AppLayout from "@/layout/AppLayout"
-import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
 
 export default {
   name: 'App',
 
-  components: {
-    AppLayout,
-    WithoutTenantLayout,
-  },
-
-
-  data() {
-    return {
-      tenant: {},
-    }
-  },
-
   async created() {
-    await this.fetchAuthenticatedUser()
-    await this.fetchTenant()
-
-    if (!this.tenant.id) {
-      await this.$router.push({name: 'OrganizationIndex'})
-      return
-    }
-
-    await this.$router.push({name: 'Home'})
+    await this.setAuthenticatedUser()
   },
 
   methods: {
-    async fetchAuthenticatedUser() {
-      this.$wait.start('fetch-user')
+    async setAuthenticatedUser() {
+      this.$wait.start('set-user')
 
       await this.$store.dispatch('fetchAuthenticatedUser')
 
-      this.$wait.end('fetch-user')
-    },
-
-    async fetchTenant() {
-      this.$wait.start('fetch-tenant')
-
-      await this.$store.dispatch('fetchActiveTenant')
-      this.getTenant()
-
-      this.$wait.end('fetch-tenant')
-    },
-
-    getTenant() {
-      this.tenant = this.$store.state.tenant
+      this.$wait.end('set-user')
     },
 
     logout() {
+      this.clearLocalStorage()
+
       const form = document.getElementById('logout-form')
       form.submit()
+    },
+
+    clearLocalStorage() {
+      localStorage.removeItem('user')
+      localStorage.removeItem('tenancy')
     },
   }
 }

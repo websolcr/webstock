@@ -9,6 +9,6 @@ class ActiveTenantController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(tenant());
+        return response()->json(tenancy());
     }
 }
