@@ -1,17 +1,20 @@
 <template>
   <div>
-    <div v-if="$wait.is('fetch-tenant')">
+    <div
+      v-if="$wait.is('fetch-tenant')"
+      class="bg-red-400 p-4"
+    >
       loading ...
     </div>
 
     <div v-else>
       <p
-        class="font-bold cursor-pointer"
+        class="font-bold cursor-pointer p-4"
         @click="logout"
       >
         logout..
       </p>
-      <app-layout v-if="hasTenant" />
+      <app-layout v-if="!!tenant.id" />
       <without-tenant-layout v-else />
     </div>
   </div>
@@ -31,16 +34,16 @@ export default {
 
   data() {
     return {
-      hasTenant: false,
+      tenant: {},
     }
   },
 
   async created() {
     await this.fetchAuthenticatedUser()
-    await this.setLayout()
+    await this.fetchTenant()
 
-    if (!this.hasTenant) {
-      await this.$router.push({name: 'CreateOrganization'})
+    if (!this.tenant.id) {
+      await this.$router.push({name: 'OrganizationIndex'})
       return
     }
 
@@ -49,34 +52,24 @@ export default {
 
   methods: {
     async fetchAuthenticatedUser() {
+      this.$wait.start('fetch-user')
+
       await this.$store.dispatch('fetchAuthenticatedUser')
-    },
 
-    async setLayout() {
-      if (!this.$store.state.user) {
-        return
-      }
-
-      this.$wait.start('fetch-tenant')
-
-      await this.fetchTenant()
-      this.setLayoutBasedOnTenant()
-
-      this.$wait.end('fetch-tenant')
-
+      this.$wait.end('fetch-user')
     },
 
     async fetchTenant() {
+      this.$wait.start('fetch-tenant')
+
       await this.$store.dispatch('fetchActiveTenant')
+      this.getTenant()
+
+      this.$wait.end('fetch-tenant')
     },
 
-    setLayoutBasedOnTenant() {
-      if (!this.$store.state.tenant.id) {
-        this.hasTenant = false
-        return
-      }
-
-      this.hasTenant = true
+    getTenant() {
+      this.tenant = this.$store.state.tenant
     },
 
     logout() {

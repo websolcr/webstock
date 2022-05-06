@@ -3,6 +3,7 @@ import HomePage from "@/views/HomePage.vue"
 import CreateOrganization from "@/views/CreateOrganization.vue"
 import WithoutTenantLayout from "@/layout/WithoutTenantLayout.vue"
 import AppLayout from "@/layout/AppLayout.vue"
+import OrganizationIndex from "@/views/OrganizationIndex.vue"
 
 const routes = [
   {
@@ -10,6 +11,11 @@ const routes = [
     name: 'WithoutTenant',
     component: WithoutTenantLayout,
     children: [
+      {
+        path: '/organization-index',
+        name: 'OrganizationIndex',
+        component: OrganizationIndex,
+      },
       {
         path: '/create-organization',
         name: 'CreateOrganization',

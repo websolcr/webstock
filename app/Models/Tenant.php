@@ -14,7 +14,17 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     protected $fillable = [
         'user_id',
+        'name',
     ];
+
+    public static function getCustomColumns(): array
+    {
+        return [
+            'id',
+            'name',
+            'user_id',
+        ];
+    }
 
     public function owner(): BelongsTo
     {

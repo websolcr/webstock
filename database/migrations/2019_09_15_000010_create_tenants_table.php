@@ -19,6 +19,7 @@ class CreateTenantsTable extends Migration
             $table->string('id')->primary();
 
             $table->foreignId('user_id')->constrained();
+            $table->string('name');
 
             // your custom columns may go here
 

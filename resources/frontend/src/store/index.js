@@ -17,7 +17,7 @@ const store = createStore({
     },
 
     async fetchActiveTenant() {
-      const { data } = await axios.get('api/tenant')
+      const { data } = await axios.get('api/active-tenant')
 
       store.commit('setTenant', data)
     }
