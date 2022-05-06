@@ -13,4 +13,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthenticationController::class, 'register'])->name('register');
 });
 
-Route::get('/{any}', SPAController::class)->where('any', '^(?!api).*$')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/{any}', SPAController::class)->where('any', '^(?!api).*$');
+});
+
