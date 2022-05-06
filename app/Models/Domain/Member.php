@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Member extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'global_id',
+    ];
 }
