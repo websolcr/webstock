@@ -20,7 +20,7 @@ Migrate the database,
 >php artisan migrate:seed
 
 Migrate the test database
->php artisan migrate:fresh --database=mysql_test
+>php artisan migrate:fresh --database=pgsql_test
 
 Install node modules from project root.
 >npm install
