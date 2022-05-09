@@ -24,4 +24,39 @@ class TenantFeatureTest extends TestCase
 
         $response->assertJsonCount(3);
     }
+
+    /** @test */
+    public function can_create_tenant()
+    {
+        $this->actingAs(User::factory()->create());
+
+        $data = [
+            'name' => 'test organization',
+        ];
+
+        $response = $this->postJson('/api/tenant/create', $data);
+
+        $response->assertNoContent();
+
+        $this->assertDatabaseHas('tenants', $data);
+    }
+
+    /** @test */
+    public function can_access_inside_tenant()
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->get('api/active-tenant');
+
+        $tenant = Tenant::create([
+            'name' => 'test organization',
+            'user_id' => auth()->id(),
+        ]);
+
+        $response = $this->postJson('/api/tenant/'.$tenant->id.'/initialize');
+
+        $response->assertOk();
+
+        $this->assertEquals($tenant->id, tenancy()->tenant->id);
+    }
 }

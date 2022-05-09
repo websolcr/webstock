@@ -1,14 +1,16 @@
 import {createRouter, createWebHistory} from "vue-router"
-import HomePage from "@/views/HomePage.vue"
-import CreateOrganization from "@/views/CreateOrganization.vue"
-import WithoutTenantLayout from "@/layout/WithoutTenantLayout.vue"
-import AppLayout from "@/layout/AppLayout.vue"
-import OrganizationIndex from "@/views/OrganizationIndex.vue"
+import HomePage from "@/views/HomePage"
+import CreateOrganization from "@/views/organization/OrganizationCreate"
+import OrganizationIndex from "@/views/organization/OrganizationIndex"
+import store from "@/store"
+import AppLayout from "@/layout/AppLayout"
+import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
 
 const routes = [
   {
-    path: '/without-tenant',
-    name: 'WithoutTenant',
+    path: '/app',
+    name: 'App',
+    meta: {auth: true},
     component: WithoutTenantLayout,
     children: [
       {
@@ -20,28 +22,40 @@ const routes = [
         path: '/create-organization',
         name: 'CreateOrganization',
         component: CreateOrganization
-      }
+      },
     ]
   },
-
   {
-    path: '/with-tenant',
-    name: 'WithTenant',
+    path: '/',
+    name: 'Dashboard',
+    meta: {auth: true, tenant: true},
     component: AppLayout,
     children: [
       {
-        path: '/',
+        path: '/home',
         name: 'Home',
         component: HomePage,
       },
     ]
-  }
-
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+
+  if (to.meta.tenant && !store.state.tenancy) {
+    next({name: 'OrganizationIndex'})
+  }
+
+  if (to.path === '/') {
+    next({name: 'Home'})
+  }
+
+  next()
 })
 
 export default router
