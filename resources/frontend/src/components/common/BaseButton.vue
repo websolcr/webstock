@@ -4,7 +4,6 @@
     :class="[
       buttonType === 'filled' ? filledStyles : defaultStyles,
     ]"
-    @click="$emit('click')"
   >
     <span class="spinner" />
     <span>{{ label }}</span>

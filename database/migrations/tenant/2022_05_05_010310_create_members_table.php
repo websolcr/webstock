@@ -13,8 +13,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('members', function (Blueprint $table) {
-            $table->id();
-            $table->string('global_id');
+            $table->uuid('id')->primary();
+            $table->uuid('global_id');
             $table->timestamps();
         });
     }

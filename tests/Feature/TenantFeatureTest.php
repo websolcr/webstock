@@ -42,7 +42,7 @@ class TenantFeatureTest extends TestCase
     }
 
     /** @test */
-    public function can_access_inside_tenant()
+    public function can_login_tenant()
     {
         $this->actingAs(User::factory()->create());
 

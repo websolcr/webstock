@@ -2,13 +2,10 @@
 
 namespace App\Models\Domain;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\AppModel;
 
-class Member extends Model
+class Member extends AppModel
 {
-    use HasFactory;
-
     protected $fillable = [
         'global_id',
     ];
