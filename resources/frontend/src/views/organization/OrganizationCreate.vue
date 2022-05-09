@@ -45,7 +45,6 @@ export default {
     BaseInput,
   },
 
-
   data() {
     return {
       form: {
