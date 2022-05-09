@@ -7,10 +7,8 @@
       sidebar
     </div>
     <div class="flex-1">
-      <div class="bg-blue-600 h-16">
-        Navbar
-
-        {{ organization.tenant.name }}
+      <div>
+        <Navbar />
       </div>
       <div class="bg-gray-600 h-screen">
         <router-view :key="$route.fullPath" />
@@ -20,17 +18,18 @@
 </template>
 
 <script>
+import Navbar from "@/components/layout-components/Navbar"
+
 export default {
   name: 'AppLayout',
+  components: {
+    Navbar,
+  },
 
   computed: {
     hasActiveTenant () {
       return !!this.$store.state.tenancy
     },
-
-    organization() {
-      return this.$store.state.tenancy
-    }
   }
 }
 </script>

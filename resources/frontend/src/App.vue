@@ -7,12 +7,6 @@
       loading ...
     </div>
     <div v-else>
-      <p
-        class="font-bold cursor-pointer p-4"
-        @click="logout"
-      >
-        logout..
-      </p>
       <router-view />
     </div>
   </div>
@@ -36,17 +30,6 @@ export default {
       this.$wait.end('set-user')
     },
 
-    logout() {
-      this.clearLocalStorage()
-
-      const form = document.getElementById('logout-form')
-      form.submit()
-    },
-
-    clearLocalStorage() {
-      localStorage.removeItem('user')
-      localStorage.removeItem('tenancy')
-    },
   }
 }
 </script>
