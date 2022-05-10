@@ -5,6 +5,7 @@ module.exports = {
   ],
   theme: {
     colors: {
+      white: '#ffffff',
       gray: {
         bg: '#f5f8fa',
       },
@@ -19,11 +20,11 @@ module.exports = {
         '700': '#1d4ed8',
         '800': '#1e40af',
         '900': '#1e3a8a',
+      },
+      indigo: {
+        '500': '#6366f1',
       }
     },
     extend: {},
-  },
-  plugins: [
-    require('@tailwindcss/forms')
-  ],
+  }
 }
