@@ -1,7 +1,7 @@
 <template>
   <div
     is="nav"
-    class="bg-indigo-500 shadow flex justify-between h-16 px-2 items-center"
+    class="bg-indigo-500 shadow flex justify-between h-16 px-6 items-center"
   >
     <div>
       <h3 class="text-sm font-bold text-white">
@@ -9,19 +9,20 @@
       </h3>
     </div>
     <div>
-      <div class="flex gap-2">
+      <div class="flex gap-6">
         <div class="text-sm text-white">
           {{ user.name }}
         </div>
         <div>
           <bell-icon
-            class="h-6 w-6 text-white cursor-pointer"
+            class="h-6 w-6 text-white cursor-pointer hover:border-2 border-transparent rounded-full"
             aria-hidden="true"
+            @click="$emit('toggleNotificationWidget')"
           />
         </div>
         <div>
           <logout-icon
-            class="h-6 w-6 text-white cursor-pointer"
+            class="h-6 w-6 text-white cursor-pointer hover:border-2 border-transparent rounded-full"
             aria-hidden="true"
             @click="logout"
           />
@@ -37,9 +38,17 @@ import LogoutIcon from '@/components/common/svg-icon/LogoutIcon'
 
 export default {
   name: 'NavBar',
+
   components: {
     BellIcon,
     LogoutIcon,
+  },
+
+  props: {
+    isShowingNotificationWidget: {
+      type: Boolean,
+      required: true,
+    }
   },
 
   computed: {
