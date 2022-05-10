@@ -1,27 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{{config('app.name')}}</title>
-</head>
-<body>
-<div>
-    @if($errors->any())
-        {{ implode('', $errors->all('<div>:message</div>')) }}
-    @endif
-    <form action="/login" method="post">
-        @csrf
+@extends('authentication.auth-layout')
 
-        <label>
-            <input name="email" type="email" placeholder="email" required>
-        </label>
-        <label>
-            <input name="password" type="password" placeholder="password" required>
-        </label>
+@section('form')
+    <div class="formbg-outer">
+        <div class="formbg">
+            <div class="formbg-inner padding-horizontal--48">
+                <span class="padding-bottom--15">Sign in to your account</span>
+                @if ($errors->has('email'))
+                    <span class="error">{{ $errors->first('email') }}</span>
+                @endif
+                <form action="/login" method="POST" id="stripe-login">
+                    @csrf
+                    <div class="field padding-bottom--24">
+                        <label for="email">Email</label>
+                        <input type="email"
+                               name="email"
+                               placeholder="michel@gmail.com"
+                               required
+                               value="{{old('email')}}"
+                        >
+                    </div>
+                    <div class="field padding-bottom--24">
+                        <div class="grid--50-50">
+                            <label for="password">Password</label>
+                            <div class="reset-pass">
+                                <a href="#">Forgot your password?</a>
+                            </div>
+                        </div>
+                        <input type="password"
+                               name="password"
+                               placeholder="Enter a password"
+                               required
+                        >
+                    </div>
+                    <div class="field padding-bottom--24">
+                        <input type="submit" name="submit" value="Sign In">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer-link padding-top--24">
+            <span>Don't have an account? <a href="/register">Sign up</a></span>
+            <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+                <span><a href="#">© websolcr</a></span>
+                <span><a href="#">Contact</a></span>
+                <span><a href="#">Privacy & terms</a></span>
+            </div>
+        </div>
+    </div>
 
-        <button type="submit">Login</button>
-
-    </form>
-</div>
-</body>
-</html>
-
+@endsection
