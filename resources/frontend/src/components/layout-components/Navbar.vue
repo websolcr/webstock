@@ -15,6 +15,7 @@
         </div>
         <div>
           <bell-icon
+            v-tooltip="'notifications'"
             class="h-6 w-6 text-white cursor-pointer hover:border-2 border-transparent rounded-full"
             aria-hidden="true"
             @click="$emit('toggleNotificationWidget')"
@@ -22,6 +23,7 @@
         </div>
         <div>
           <logout-icon
+            v-tooltip="'logout'"
             class="h-6 w-6 text-white cursor-pointer hover:border-2 border-transparent rounded-full"
             aria-hidden="true"
             @click="logout"
@@ -70,7 +72,7 @@ export default {
     clearLocalStorage() {
       localStorage.removeItem('user')
       localStorage.removeItem('tenancy')
-    }
+    },
   },
 }
 </script>
