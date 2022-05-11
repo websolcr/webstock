@@ -3,29 +3,40 @@
     is="nav"
     class="bg-indigo-500 shadow flex justify-between h-16 px-6 items-center"
   >
-    <div>
-      <h3 class="text-sm font-bold text-white">
-        {{ organization.tenant.name }}
-      </h3>
+    <div class="flex gap-3">
+      <div class="text-3xl font-bold text-white">
+        {{ organization.tenant.name }} |
+      </div>
+      <div class="text-sm bg-red-300 flex items-end">
+        <span class="align-bottom">
+          <router-link
+            :to="{name: 'OrganizationIndex'}"
+            class="text-white"
+          >
+            Your Organizations
+          </router-link>
+        </span>
+      </div>
     </div>
+
     <div>
       <div class="flex gap-6">
         <div class="text-sm text-white">
           {{ user.name }}
         </div>
         <div>
-          <bell-icon
+          <svg-icon
             v-tooltip="'notifications'"
-            class="h-6 w-6 text-white cursor-pointer hover:border-2 border-transparent rounded-full"
-            aria-hidden="true"
+            icon="bell"
+            class="text-white cursor-pointer"
             @click="$emit('toggleNotificationWidget')"
           />
         </div>
         <div>
-          <logout-icon
+          <svg-icon
             v-tooltip="'logout'"
-            class="h-6 w-6 text-white cursor-pointer hover:border-2 border-transparent rounded-full"
-            aria-hidden="true"
+            icon="logout"
+            class="text-white cursor-pointer"
             @click="logout"
           />
         </div>
@@ -35,16 +46,9 @@
 </template>
 
 <script>
-import BellIcon from '@/components/common/svg-icon/BellIcon'
-import LogoutIcon from '@/components/common/svg-icon/LogoutIcon'
 
 export default {
   name: 'NavBar',
-
-  components: {
-    BellIcon,
-    LogoutIcon,
-  },
 
   props: {
     isShowingNotificationWidget: {

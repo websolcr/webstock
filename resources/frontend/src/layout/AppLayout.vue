@@ -6,14 +6,14 @@
     <div class="flex bg-blue-200 h-screen w-72">
       sidebar
     </div>
-    <div class="flex-1">
+    <div class="flex-1 bg-blue-50">
       <div>
         <Navbar
           :is-showing-notification-widget="isShowingNotificationWidget"
           @toggleNotificationWidget="toggleNotificationWidget"
         />
       </div>
-      <div class="bg-gray-600 h-screen">
+      <div>
         <router-view :key="$route.fullPath" />
       </div>
     </div>

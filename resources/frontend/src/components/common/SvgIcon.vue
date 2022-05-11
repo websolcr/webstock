@@ -1,0 +1,45 @@
+<template>
+  <div>
+    <plus-icon v-if="icon === 'plus'" />
+    <bell-icon v-if="icon === 'bell'" />
+    <close-icon v-if="icon === 'close'" />
+    <pencil-icon v-if="icon === 'pencil'" />
+    <logout-icon v-if="icon === 'logout'" />
+    <information-icon v-if="icon === 'info'" />
+    <right-arrow v-if="icon === 'rightArrow' || icon === 'next' || icon === 'right'" />
+    <left-arrow v-if="icon === 'leftArrow' || icon === 'previous' || icon === 'left'" />
+  </div>
+</template>
+
+<script>
+import PlusIcon from "@/components/common/svg-icon/PlusIcon"
+import BellIcon from "@/components/common/svg-icon/BellIcon"
+import CloseIcon from "@/components/common/svg-icon/CloseIcon"
+import LeftArrow from "@/components/common/svg-icon/LeftArrow"
+import RightArrow from "@/components/common/svg-icon/RightArrow"
+import LogoutIcon from "@/components/common/svg-icon/LogoutIcon"
+import PencilIcon from "@/components/common/svg-icon/PencilIcon"
+import InformationIcon from "@/components/common/svg-icon/InformationIcon"
+
+export default {
+  name: 'SvgIcon',
+
+  components: {
+    InformationIcon,
+    PencilIcon,
+    PlusIcon,
+    LogoutIcon,
+    RightArrow,
+    LeftArrow,
+    BellIcon,
+    CloseIcon
+  },
+
+  props: {
+    icon: {
+      type: String,
+      required: true,
+    },
+  }
+}
+</script>

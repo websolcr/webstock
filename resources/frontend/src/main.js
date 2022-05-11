@@ -4,6 +4,7 @@ import App from './App.vue'
 import axios from "axios"
 import store from "@/store"
 import router from "@/routes"
+import SvgIcon from "@/components/common/SvgIcon"
 import {
   VTooltip,
   VClosePopper,
@@ -28,13 +29,16 @@ app.config.globalProperties.$http = { ...axiosInstance }
 app.config.globalProperties.$store = store
 app.config.globalProperties.$router = router
 
-app.use(store)
-app.use(router)
-app.use(createVueWait())
-app.mount('#app')
+app.component('SvgIcon', SvgIcon)
+
 app.directive('tooltip', VTooltip)
 app.directive('close-popper', VClosePopper)
 
 app.component('VDropdown', Dropdown)
 app.component('VTooltip', Tooltip)
 app.component('VMenu', Menu)
+
+app.use(store)
+app.use(router)
+app.use(createVueWait())
+app.mount('#app')

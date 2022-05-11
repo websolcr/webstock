@@ -4,6 +4,7 @@
     :class="[
       buttonType === 'filled' ? filledStyles : defaultStyles,
     ]"
+    @click.prevent
   >
     <span class="spinner" />
     <span>{{ label }}</span>
