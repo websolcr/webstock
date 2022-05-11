@@ -17,7 +17,7 @@
         @csrf
     </form>
     <form id="load-home-form" action="/home" method="GET" class="hidden">
-        @csrf
+
     </form>
   </body>
 </html>
