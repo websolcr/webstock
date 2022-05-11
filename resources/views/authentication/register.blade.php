@@ -3,7 +3,7 @@
 @section('form')
     <div class="formbg-outer">
         <div class="formbg">
-            <div class="formbg-inner padding-horizontal--48">
+            <div class="formbg-inner" style="padding: 18px 48px 18px 48px ">
                 <span class="padding-bottom--15">Create New Account</span>
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
@@ -52,9 +52,9 @@
                 </form>
             </div>
         </div>
-        <div class="footer-link padding-top--24">
+        <div class="footer-link" style="padding-top:16px ">
             <span>Already have an account? <a href="/login">Sign in</a></span>
-            <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+            <div class="listing flex-flex center-center" style="padding-top: 10px">
                 <span><a href="#">© websolcr</a></span>
                 <span><a href="#">Contact</a></span>
                 <span><a href="#">Privacy & terms</a></span>
