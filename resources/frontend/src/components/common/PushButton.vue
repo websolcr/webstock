@@ -1,7 +1,7 @@
 <template>
   <button
-    class="relative ease-linear duration-150 rounded-full px-3 py-2 shadow-lg font-normal bg-white"
-    :class="[isActive? 'bg-blue-400' : '']"
+    class="relative duration-100 rounded-full px-2.5 py-2 shadow-lg font-normal bg-white button-size items-center"
+    :class="[isActive? 'bg-blue-300' : '']"
   >
     <div>
       <svg-icon
@@ -32,3 +32,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.button-size{
+  height: 40px;
+  width: 40px;
+}
+</style>

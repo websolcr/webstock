@@ -2,14 +2,15 @@
   <div>
     <label
       :for="id"
-      class="ml-px pl-4 block text-sm font-medium text-gray-700"
-    >Name</label>
+      class="ml-px  block text-sm font-medium text-gray-700"
+    >{{ label }}</label>
     <div class="mt-1">
       <input
         :id="id"
         :type="type"
         :name="id"
-        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 px-4 rounded-full"
+        :value="modelValue"
+        class="shadow-sm focus:ring-blue-200 block w-full sm:text-sm px-4 input-height mb-2 shadow-lg"
         :placeholder="placeholder"
         @input="$emit('update:modelValue', $event.target.value)"
       >
@@ -38,6 +39,17 @@ export default {
       type: String,
       default: 'text',
     },
+    modelValue: {
+      type: [String, Number],
+      default: null,
+    },
   },
 }
 </script>
+
+<style scoped>
+.input-height{
+  display:inline-block;
+  padding:10px 10px;
+}
+</style>

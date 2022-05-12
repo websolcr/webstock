@@ -6,6 +6,7 @@
     <pencil-icon v-if="icon === 'pencil'" />
     <logout-icon v-if="icon === 'logout'" />
     <information-icon v-if="icon === 'info'" />
+    <documents-icon v-if="icon === 'document'" />
     <right-arrow v-if="icon === 'rightArrow' || icon === 'next' || icon === 'right'" />
     <left-arrow v-if="icon === 'leftArrow' || icon === 'previous' || icon === 'left'" />
   </div>
@@ -19,12 +20,14 @@ import LeftArrow from "@/components/common/svg-icon/LeftArrow"
 import RightArrow from "@/components/common/svg-icon/RightArrow"
 import LogoutIcon from "@/components/common/svg-icon/LogoutIcon"
 import PencilIcon from "@/components/common/svg-icon/PencilIcon"
+import DocumentsIcon from "@/components/common/svg-icon/DocumentsIcon"
 import InformationIcon from "@/components/common/svg-icon/InformationIcon"
 
 export default {
   name: 'SvgIcon',
 
   components: {
+    DocumentsIcon,
     InformationIcon,
     PencilIcon,
     PlusIcon,

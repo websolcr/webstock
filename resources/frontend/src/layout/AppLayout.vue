@@ -3,8 +3,12 @@
     v-if="hasActiveTenant"
     class="flex h-screen"
   >
-    <div class="flex bg-blue-200 h-screen w-72">
-      sidebar
+    <div class="flex flex-col bg-gray-900 h-screen w-72">
+      <sidebar-link
+        tooltip="User Management"
+        label="User Management"
+        named-route="UserManagement"
+      />
     </div>
     <div class="flex-1 bg-blue-50">
       <div>
@@ -30,11 +34,13 @@
 <script>
 import Navbar from "@/components/layout-components/Navbar"
 import NotificationWidget from "@/components/notification/NotificationWidget"
+import SidebarLink from "@/components/common/SidebarLink"
 
 export default {
   name: 'AppLayout',
 
   components: {
+    SidebarLink,
     Navbar,
     NotificationWidget,
   },
