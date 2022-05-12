@@ -322,8 +322,8 @@
                 </div>
             </div>
         </div>
-        <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
-            <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+        <div class="box-root  flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;justify-content: center;">
+            <div class="box-root padding-bottom--24 flex-flex flex-justifyContent--center">
                 <h1><a href="#" rel="dofollow">WebStock</a></h1>
             </div>
 
