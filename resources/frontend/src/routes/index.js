@@ -5,6 +5,7 @@ import OrganizationIndex from "@/views/organization/OrganizationIndex"
 import store from "@/store"
 import AppLayout from "@/layout/AppLayout"
 import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
+import UserManagement from "@/views/UserManagement"
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
         name: 'Home',
         component: HomePage,
       },
+      {
+        path: '/user-management',
+        name: 'UserManagement',
+        component: UserManagement
+      }
     ]
   },
 ]

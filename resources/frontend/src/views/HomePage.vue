@@ -26,7 +26,7 @@
     </title-bar>
 
     <div class="mt-1 w-full flex flex-col p-3">
-      body
+      home page content goes here
     </div>
 
     <home-page-edit-widget
@@ -53,13 +53,14 @@ export default {
   data() {
     return{
       isShowingEditWidget: false,
+      email: '',
     }
   },
 
   methods: {
     toggleEditWidget() {
       this.isShowingEditWidget = !this.isShowingEditWidget
-    }
+    },
   }
 }
 </script>

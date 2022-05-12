@@ -4,10 +4,12 @@
     class="bg-indigo-500 shadow flex justify-between h-16 px-6 items-center"
   >
     <div class="flex gap-3">
-      <div class="text-3xl font-bold text-white">
-        {{ organization.tenant.name }} |
-      </div>
-      <div class="text-sm bg-red-300 flex items-end">
+      <router-link :to="{name: 'Home'}">
+        <div class="text-3xl font-bold text-white">
+          {{ organization.tenant.name }} |
+        </div>
+      </router-link>
+      <div class="text-sm flex items-end">
         <span class="align-bottom">
           <router-link
             :to="{name: 'OrganizationIndex'}"

@@ -27,6 +27,9 @@ module.exports = {
       },
       indigo: {
         '500': '#6366f1',
+      },
+      red: {
+        '300' : '#de2e2e',
       }
     },
     extend: {},
