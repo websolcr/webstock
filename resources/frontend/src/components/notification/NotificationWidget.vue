@@ -23,7 +23,8 @@
             <div class="flex justify-between text-xs">
               <div>You have {{ notifications.length }} notifications</div>
               <div>
-                <close-icon
+                <svg-icon
+                  icon="close"
                   class="cursor-pointer"
                   @click="$emit('toggleNotificationWidget')"
                 />
@@ -62,7 +63,7 @@
                 @click="selectedChunkedNotificationIndex --"
               >
                 <div class="flex items-center text-xs">
-                  <left-arrow /> Previous
+                  <svg-icon icon="previous" /> Previous
                 </div>
               </button>
               <button
@@ -72,7 +73,7 @@
                 @click="selectedChunkedNotificationIndex ++"
               >
                 <div class="flex items-center text-xs">
-                  Next <right-arrow />
+                  Next <svg-icon icon="next" />
                 </div>
               </button>
             </div>
@@ -85,7 +86,8 @@
             <div class="flex justify-between">
               <div>You have no notifications</div>
               <div>
-                <close-icon
+                <svg-icon
+                  icon="close"
                   class="cursor-pointer"
                   @click="$emit('toggleNotificationWidget')"
                 />
@@ -100,18 +102,9 @@
 
 <script>
 import {chunk} from "lodash"
-import CloseIcon from "@/components/common/svg-icon/CloseIcon"
-import LeftArrow from "@/components/common/svg-icon/LeftArrow"
-import RightArrow from "@/components/common/svg-icon/RightArrow"
 
 export default {
   name: "NotificationWidget",
-
-  components: {
-    CloseIcon,
-    RightArrow,
-    LeftArrow,
-  },
 
   props: {
     isShowingNotificationWidget: {

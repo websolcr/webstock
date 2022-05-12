@@ -7,7 +7,7 @@ module.exports = {
     colors: {
       white: '#ffffff',
       gray: {
-        bg: '#f5f8fa',
+        '100' : '#f3f4f6',
         '400' : '#a1a1aa',
         '500' : '#71717a',
         '600' : '#52525b',
