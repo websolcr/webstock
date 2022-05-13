@@ -5,7 +5,6 @@
       disabled ? disabledClasses : activeClasses
     ]"
     :disabled="disabled"
-    @click.prevent
   >
     <span class="spinner" />
     <span>{{ label }}</span>
