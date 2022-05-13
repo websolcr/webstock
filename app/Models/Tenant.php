@@ -7,6 +7,7 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
@@ -29,5 +30,10 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 }
