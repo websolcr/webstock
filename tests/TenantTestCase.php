@@ -40,7 +40,7 @@ abstract class TenantTestCase extends TestCase
     public function tearDown(): void
     {
         config([
-            'tenancy.queue_database_deletion' => false,
+            'tenancy.queue_database_deletion' => true,
             'tenancy.delete_database_after_tenant_deletion' => true,
         ]);
 

@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('email');
             $table->string('tenant_id');
-            $table->string('remember_token')->unique();
+            $table->string('token')->unique();
             $table->timestamps();
 
             $table->unique(['email', 'tenant_id']);

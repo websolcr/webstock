@@ -15,11 +15,17 @@ class InvitationSendAction
         $invitation = Invitation::create([
             'email' => $receiver,
             'tenant_id' => tenant('id'),
-            'remember_token' => Str::random(200),
+            'token' => Str::random(200),
         ]);
 
-        $url = URL::signedRoute('invitation.accept', ['token' => $invitation->token]);
+        $url = URL::signedRoute('invitation.accept', [
+            'invitation_token' => $invitation->remember_token,
+        ]);
 
-        Mail::to($invitation->email)->send(new MembershipInvitation(organization: tenant('name'), signedUrl: $url));
+        Mail::to($invitation->email)
+            ->send(new MembershipInvitation(
+                organization: tenant('name'),
+                signedUrl: $url
+            ));
     }
 }

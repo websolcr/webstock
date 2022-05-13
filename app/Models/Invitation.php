@@ -13,6 +13,6 @@ class Invitation extends AppModel
     protected $fillable = [
         'email',
         'tenant_id',
-        'remember_token',
+        'token',
     ];
 }
