@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 
 class InvitationFeatureTest extends TenantTestCase
 {
+    const CENTRAL_DATABASE_CONNECTION = 'pgsql_test';
+
     /** @test */
     public function can_send_invitation()
     {
@@ -26,7 +28,7 @@ class InvitationFeatureTest extends TenantTestCase
         $this->assertDatabaseHas('invitations', [
             'email' => $receiver,
             'tenant_id' => tenant('id'),
-        ], config('tenancy.database.central_connection'));
+        ], self::CENTRAL_DATABASE_CONNECTION);
 
         Mail::assertQueued(MembershipInvitation::class, function ($email) use ($receiver) {
             return $email->hasTo($receiver);
@@ -127,12 +129,48 @@ class InvitationFeatureTest extends TenantTestCase
         $this->assertDatabaseHas('tenant_user', [
             'tenant_id' => $invitation->tenant_id,
             'user_id' => $user->id,
-        ], config('tenancy.database.central_connection'));
+        ], self::CENTRAL_DATABASE_CONNECTION);
 
         $this->assertSoftDeleted($invitation);
 
         $this->assertDatabaseHas('members', [
             'global_id' => $user->id,
+        ]);
+    }
+
+    /** @test */
+    public function invited_non_existing_user_become_a_member_of_invited_organization_after_authenticated()
+    {
+        $user = User::factory()->make();
+
+        $invitation = Invitation::factory()->create([
+            'email' => 'newuser@test.com',
+            'tenant_id' => tenant('id'),
+            'token' => Str::random(200),
+        ]);
+
+        auth()->logout();
+        tenancy()->end();
+
+        $response = $this->post('/register', [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'invitation_token' => $invitation->token,
+        ]);
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('tenant_user', [
+            'tenant_id' => $invitation->tenant_id,
+            'user_id' => User::firstWhere('email', $user->email)->id,
+        ], self::CENTRAL_DATABASE_CONNECTION);
+
+        $this->assertSoftDeleted($invitation);
+
+        $this->assertDatabaseHas('members', [
+            'global_id' => User::firstWhere('email', $user->email)->id,
         ]);
     }
 }
