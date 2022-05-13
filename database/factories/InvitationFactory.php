@@ -12,7 +12,7 @@ class InvitationFactory extends Factory
         return [
             'email' => $this->faker->safeEmail(),
             'tenant_id' => tenant('id'),
-            'remember_token' => Str::random(32),
+            'token' => Str::random(32),
         ];
     }
 }
