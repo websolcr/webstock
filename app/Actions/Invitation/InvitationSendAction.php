@@ -4,6 +4,7 @@ namespace App\Actions\Invitation;
 
 use App\Models\Invitation;
 use Illuminate\Support\Str;
+use App\Events\InvitationSend;
 use App\Mail\MembershipInvitation;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
@@ -27,5 +28,7 @@ class InvitationSendAction
                 organization: tenant('name'),
                 signedUrl: $url
             ));
+
+        event(new InvitationSend($invitation));
     }
 }

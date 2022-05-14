@@ -16,6 +16,22 @@ Create database `webstock_test` for testing purposes.
 
 Set database credentials in `.env`
 
+Set Broadcast driver to pusher
+>BROADCAST_DRIVER=pusher
+
+Set your pusher credentials
+>PUSHER_APP_ID=
+> 
+>PUSHER_APP_KEY=
+> 
+>PUSHER_APP_SECRET=
+> 
+>PUSHER_APP_CLUSTER=
+> 
+>VUE_APP_PUSHER_APP_KEY=
+> 
+>VUE_APP_PUSHER_APP_CLUSTER=
+
 Migrate the database,
 >php artisan migrate:seed
 
