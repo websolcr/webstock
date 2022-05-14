@@ -9,6 +9,8 @@ class MembersController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Member::all());
+        return response()->json(
+            Member::with('invitedBy')->get()
+        );
     }
 }

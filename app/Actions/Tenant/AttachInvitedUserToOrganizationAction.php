@@ -19,6 +19,10 @@ class AttachInvitedUserToOrganizationAction
 
         Member::create([
             'global_id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => 'role',
+            'invited_by' => Member::firstWhere('global_id', $invitation->sender_id)->id,
         ]);
 
         event(new InvitationAccept($invitation, $user));

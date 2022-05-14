@@ -64,6 +64,7 @@ class InvitationSendAction
             'email' => $this->receiver,
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id' => auth()->id(),
         ]);
     }
 }

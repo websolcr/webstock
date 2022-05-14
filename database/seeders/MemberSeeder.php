@@ -9,8 +9,13 @@ class MemberSeeder extends Seeder
 {
     public function run()
     {
+        $user = Member::factory()->create();
+
         Member::create([
-            'global_id' => auth()->id(),
+            'global_id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => 'admin',
         ]);
     }
 }

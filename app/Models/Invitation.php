@@ -16,5 +16,6 @@ class Invitation extends AppModel
         'email',
         'tenant_id',
         'token',
+        'sender_id',
     ];
 }
