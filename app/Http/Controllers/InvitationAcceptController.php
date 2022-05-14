@@ -15,11 +15,22 @@ class InvitationAcceptController extends Controller
             abort(403);
         }
 
+        if (auth()->user()) {
+            tenancy()->end();
+            auth()->logout();
+
+            //todo: send response to frontend for clear browser local storage
+        }
+
         $invitation = Invitation::firstWhere('token', $request->get('invitation_token'));
+
+        if (! $invitation) {
+            abort(401);
+        }
 
         $invitationData = [
             'email' => $invitation->email,
-            'tenant_id' => $invitation->tenant_id,
+            'invitation_token' => $invitation->token,
         ];
 
         $user = User::firstWhere('email', $invitationData['email']);

@@ -12,12 +12,21 @@
                     @csrf
                     <div class="field padding-bottom--24">
                         <label for="email">Email</label>
-                        <input type="email"
-                               name="email"
-                               placeholder="michel@gmail.com"
-                               required
-                               value="{{old('email')}}"
-                        >
+                        @isset($invitationData)
+                            <input type="email"
+                                   name="email"
+                                   readonly
+                                   value="{{$invitationData['email']}}"
+                            >
+                            <input type="hidden" name="invitation_token" value="{{$invitationData['invitation_token']}}">
+                        @else
+                            <input type="email"
+                                   name="email"
+                                   placeholder="michel@gmail.com"
+                                   required
+                                   value="{{old('email')}}"
+                            >
+                        @endisset
                     </div>
                     <div class="field padding-bottom--24">
                         <div class="grid--50-50">

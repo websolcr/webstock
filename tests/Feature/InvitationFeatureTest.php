@@ -54,7 +54,7 @@ class InvitationFeatureTest extends TenantTestCase
 
         $response->assertViewIs('authentication.login')->assertViewHas('invitationData', [
             'email' => $invitation->email,
-            'tenant_id' => $invitation->tenant_id,
+            'invitation_token' => $invitation->token,
         ]);
     }
 
@@ -71,11 +71,10 @@ class InvitationFeatureTest extends TenantTestCase
 
         $response = $this->get(route('invitation.accept', [
             'invitation_token' => $invitation->token,
-            'signature' => Str::random()
+            'signature' => Str::random(),
         ]));
 
         $response->assertStatus(403);
-
     }
 
     /** @test */
@@ -97,7 +96,43 @@ class InvitationFeatureTest extends TenantTestCase
 
         $response->assertViewIs('authentication.register')->assertViewHas('invitationData', [
             'email' => $invitation->email,
+            'invitation_token' => $invitation->token,
+        ]);
+    }
+
+    /** @test */
+    public function invited_existing_user_become_a_member_of_invited_organization_after_authenticated()
+    {
+        $user = User::factory()->create();
+
+        $invitation = Invitation::factory()->create([
+            'email' => 'newuser@test.com',
+            'tenant_id' => tenant('id'),
+            'token' => Str::random(200),
+        ]);
+
+        auth()->logout();
+        tenancy()->end();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            'invitation_token' => $invitation->token,
+        ]);
+
+        $response->assertStatus(302);
+
+        $this->assertEquals(auth()->id(), $user->id);
+
+        $this->assertDatabaseHas('tenant_user', [
             'tenant_id' => $invitation->tenant_id,
+            'user_id' => $user->id,
+        ], config('tenancy.database.central_connection'));
+
+        $this->assertSoftDeleted($invitation);
+
+        $this->assertDatabaseHas('members', [
+            'global_id' => $user->id,
         ]);
     }
 }

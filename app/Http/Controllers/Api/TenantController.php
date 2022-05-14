@@ -11,7 +11,7 @@ class TenantController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(auth()->user()->tenants);
+        return response()->json(auth()->user()->organizations);
     }
 
     public function create(): Response

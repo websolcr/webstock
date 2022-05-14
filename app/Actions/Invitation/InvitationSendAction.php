@@ -19,7 +19,7 @@ class InvitationSendAction
         ]);
 
         $url = URL::signedRoute('invitation.accept', [
-            'invitation_token' => $invitation->remember_token,
+            'invitation_token' => $invitation->token,
         ]);
 
         Mail::to($invitation->email)

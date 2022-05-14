@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('tenant_id');
             $table->string('token')->unique();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['email', 'tenant_id']);
         });
