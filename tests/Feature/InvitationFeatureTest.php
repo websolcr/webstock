@@ -6,9 +6,12 @@ use App\Models\User;
 use Tests\TenantTestCase;
 use App\Models\Invitation;
 use Illuminate\Support\Str;
+use App\Events\InvitationSend;
+use App\Events\InvitationAccept;
 use App\Mail\MembershipInvitation;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Event;
 
 class InvitationFeatureTest extends TenantTestCase
 {
@@ -17,6 +20,8 @@ class InvitationFeatureTest extends TenantTestCase
     /** @test */
     public function can_send_invitation()
     {
+        $this->withoutExceptionHandling();
+
         Mail::fake();
 
         $receiver = 'testmail@test.com';
@@ -92,14 +97,15 @@ class InvitationFeatureTest extends TenantTestCase
             'invitation_token' => $invitation->token,
         ]);
 
-        auth()->logout();
-
         $response = $this->get($invitationUrl);
 
         $response->assertViewIs('authentication.register')->assertViewHas('invitationData', [
             'email' => $invitation->email,
             'invitation_token' => $invitation->token,
         ]);
+
+        $this->assertFalse(tenancy()->initialized);
+        $this->assertNull(auth()->user());
     }
 
     /** @test */
@@ -172,5 +178,62 @@ class InvitationFeatureTest extends TenantTestCase
         $this->assertDatabaseHas('members', [
             'global_id' => User::firstWhere('email', $user->email)->id,
         ]);
+    }
+
+    /** @test */
+    public function system_will_notify_when_invitation_send_successfully()
+    {
+        Event::fake(InvitationSend::class);
+
+        $this->postJson('api/invitation-send', [
+            'email_to' => 'testmail@test.com',
+        ]);
+
+        Event::assertDispatched(InvitationSend::class, function ($event) {
+            return [
+                $event->invitation->email = 'testmail@test.com',
+            ];
+        });
+    }
+
+    /** @test */
+    public function system_will_notify_when_invitation_accept_successfully()
+    {
+        Event::fake(InvitationAccept::class);
+
+        $invitation = Invitation::factory()->create([
+            'email' => 'newuser@test.com',
+            'tenant_id' => tenant('id'),
+            'token' => Str::random(200),
+        ]);
+
+        auth()->logout();
+        tenancy()->end();
+
+        $this->post('/register', [
+            'name' => 'test name',
+            'email' => $invitation->email,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'invitation_token' => $invitation->token,
+        ]);
+
+        Event::assertDispatched(InvitationAccept::class, function ($event) use ($invitation) {
+            return [
+                $event->invitation->email = $invitation->email,
+            ];
+        });
+    }
+
+    /** @test */
+    public function cant_access_invitation_accept_without_invitation()
+    {
+        $invitationUrl = URL::signedRoute('invitation.accept', [
+            'invitation_token' => Str::random(200),
+        ]);
+
+        $response = $this->get($invitationUrl);
+
+        $response->assertStatus(401);
     }
 }

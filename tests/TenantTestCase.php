@@ -16,8 +16,6 @@ abstract class TenantTestCase extends TestCase
         parent::setUp();
 
         $this->initializeTenancy();
-
-        $this->beforeApplicationDestroyed(fn () => tenancy()->query()->get()->each->delete());
     }
 
     public function initializeTenancy(): mixed

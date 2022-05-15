@@ -32,9 +32,9 @@
 </template>
 
 <script>
+import SidebarLink from "@/components/common/SidebarLink"
 import Navbar from "@/components/layout-components/Navbar"
 import NotificationWidget from "@/components/notification/NotificationWidget"
-import SidebarLink from "@/components/common/SidebarLink"
 
 export default {
   name: 'AppLayout',
@@ -66,6 +66,18 @@ export default {
     organization() {
       return this.$store.state.tenancy
     }
+  },
+
+  mounted() {
+    this.$pusher.subscribe('private-invitations' + this.organization.tenant.id)
+      .bind('sent', function (data) {
+        console.log('sent')
+        console.log(data)
+      })
+      .bind('accept', function (data) {
+        console.log('accept')
+        console.log(data)
+      })
   },
 
   methods: {

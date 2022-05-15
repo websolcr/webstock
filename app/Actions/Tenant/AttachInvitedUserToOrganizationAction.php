@@ -5,6 +5,7 @@ namespace App\Actions\Tenant;
 use App\Models\User;
 use App\Models\Invitation;
 use App\Models\Domain\Member;
+use App\Events\InvitationAccept;
 
 class AttachInvitedUserToOrganizationAction
 {
@@ -19,6 +20,8 @@ class AttachInvitedUserToOrganizationAction
         Member::create([
             'global_id' => $user->id,
         ]);
+
+        event(new InvitationAccept($invitation));
 
         $invitation->delete();
     }
