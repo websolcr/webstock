@@ -1,11 +1,13 @@
 import {createRouter, createWebHistory} from "vue-router"
+
+import store from "@/store"
+import Audits from "@/views/Audits"
 import HomePage from "@/views/HomePage"
+import AppLayout from "@/layout/AppLayout"
+import UserManagement from "@/views/UserManagement"
+import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
 import CreateOrganization from "@/views/organization/OrganizationCreate"
 import OrganizationIndex from "@/views/organization/OrganizationIndex"
-import store from "@/store"
-import AppLayout from "@/layout/AppLayout"
-import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
-import UserManagement from "@/views/UserManagement"
 
 const routes = [
   {
@@ -41,6 +43,11 @@ const routes = [
         path: '/user-management',
         name: 'UserManagement',
         component: UserManagement
+      },
+      {
+        path: '/audits',
+        name: 'Audits',
+        component: Audits
       }
     ]
   },

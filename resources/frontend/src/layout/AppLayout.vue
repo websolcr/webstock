@@ -9,6 +9,12 @@
         label="User Management"
         named-route="UserManagement"
       />
+
+      <sidebar-link
+        tooltip="Audits"
+        label="Audits"
+        named-route="Audits"
+      />
     </div>
     <div class="flex-1 bg-blue-50">
       <div>
