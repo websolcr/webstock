@@ -21,7 +21,7 @@ class AttachInvitedUserToOrganizationAction
             'global_id' => $user->id,
         ]);
 
-        event(new InvitationAccept($invitation));
+        event(new InvitationAccept($invitation, $user));
 
         $invitation->delete();
     }
