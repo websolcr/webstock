@@ -28,12 +28,21 @@ class InvitationFeatureTest extends TenantTestCase
 
         $this->postJson('api/invitation-send', [
             'email_to' => $receiver,
+            'auditable' => true,
         ]);
 
         $this->assertDatabaseHas('invitations', [
             'email' => $receiver,
             'tenant_id' => tenant('id'),
         ], self::CENTRAL_DATABASE_CONNECTION);
+
+        $this->assertDatabaseHas('audits', [
+            'member' => auth()->user()->name,
+            'area' => 'invitation',
+            'action' => 'send',
+            'before_value' => null,
+            'after_value' => $receiver,
+        ]);
 
         Mail::assertQueued(MembershipInvitation::class, function ($email) use ($receiver) {
             return $email->hasTo($receiver);
@@ -114,7 +123,7 @@ class InvitationFeatureTest extends TenantTestCase
         $user = User::factory()->create();
 
         $invitation = Invitation::factory()->create([
-            'email' => 'newuser@test.com',
+            'email' => $user->email,
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
         ]);
@@ -123,7 +132,7 @@ class InvitationFeatureTest extends TenantTestCase
         tenancy()->end();
 
         $response = $this->post('/login', [
-            'email' => $user->email,
+            'email' => $invitation->email,
             'password' => 'password',
             'invitation_token' => $invitation->token,
         ]);
@@ -136,6 +145,14 @@ class InvitationFeatureTest extends TenantTestCase
             'tenant_id' => $invitation->tenant_id,
             'user_id' => $user->id,
         ], self::CENTRAL_DATABASE_CONNECTION);
+
+        $this->assertDatabaseHas('audits', [
+            'member' => auth()->user()->name,
+            'area' => 'invitation',
+            'action' => 'accept',
+            'before_value' => null,
+            'after_value' => $user->email,
+        ]);
 
         $this->assertSoftDeleted($invitation);
 
@@ -172,6 +189,14 @@ class InvitationFeatureTest extends TenantTestCase
             'tenant_id' => $invitation->tenant_id,
             'user_id' => User::firstWhere('email', $user->email)->id,
         ], self::CENTRAL_DATABASE_CONNECTION);
+
+        $this->assertDatabaseHas('audits', [
+            'member' => $user->name,
+            'area' => 'invitation',
+            'action' => 'accept',
+            'before_value' => null,
+            'after_value' => $user->email,
+        ]);
 
         $this->assertSoftDeleted($invitation);
 

@@ -10,10 +10,10 @@
       {{ audit.action }}
     </div>
     <div class="audit-table-row-item">
-      {{ audit.before_value }}
+      {{ audit.before_value ?? '---' }}
     </div>
     <div class="audit-table-row-item">
-      {{ audit.after_value }}
+      {{ audit.after_value ?? '---' }}
     </div>
     <div class="audit-table-row-item">
       {{ audit.created_at }}
@@ -38,7 +38,6 @@ export default {
 .audit-table-row-item {
   @apply w-1/6;
   @apply border-2;
-  @apply uppercase;
   @apply text-center;
   @apply text-gray-900;
   @apply border-blue-100;
