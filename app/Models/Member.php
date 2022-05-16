@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Models\Domain;
-
-use App\Models\AppModel;
+namespace App\Models;
 
 class Member extends AppModel
 {

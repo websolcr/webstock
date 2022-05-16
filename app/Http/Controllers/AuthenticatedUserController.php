@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
+use function auth;
+use function response;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
 
 class AuthenticatedUserController extends Controller
 {

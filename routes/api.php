@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\TenantController;
-use App\Http\Controllers\Api\TenantInitializeController;
-use App\Http\Controllers\Api\AuthenticatedUserController;
+use App\Http\Controllers\TenantController;
+use App\Http\Controllers\TenantInitializeController;
+use App\Http\Controllers\AuthenticatedUserController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -94,7 +94,7 @@ class InvitationFeatureTest extends TenantTestCase
     }
 
     /** @test */
-    public function when_already_non_existing_user_accept_invitation_he_will_redirect_to_login_register_with_invited_email()
+    public function when_non_existing_user_accept_invitation_he_will_redirect_to_register_with_invited_email()
     {
         $invitation = Invitation::factory()->create([
             'email' => 'newuser@test.com',
