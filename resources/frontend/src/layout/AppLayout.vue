@@ -3,14 +3,32 @@
     v-if="hasActiveTenant"
     class="flex h-screen"
   >
-    <div class="flex flex-col bg-gray-900 h-screen w-72">
+    <div
+      class="sidebar"
+      :style="{width: sidebarWidth + 'px'}"
+    >
+      <div class="flex p-4 justify-between text-white">
+        <div v-if="isSideBarPinned">
+          Logo goes here
+        </div>
+        <div v-else>
+          LG
+        </div>
+        <svg-icon
+          :icon="isSideBarPinned ? 'arrowCircleLeft' : 'arrowCircleRight'"
+          class="text-gray-600 hover:text-white cursor-pointer"
+          @click="toggleSideBar"
+        />
+      </div>
       <sidebar-link
+        :is-side-bar-pinned="isSideBarPinned"
         tooltip="User Management"
         label="User Management"
         named-route="UserManagement"
       />
 
       <sidebar-link
+        :is-side-bar-pinned="isSideBarPinned"
         tooltip="Audits"
         label="Audits"
         named-route="Audits"
@@ -54,6 +72,7 @@ export default {
   data() {
     return {
       isShowingNotificationWidget: false,
+      isSideBarPinned: true,
       notifications: Array(12).fill({
         id: 1,
         subject: 'Velit placeat sit ducimus non sed',
@@ -71,6 +90,10 @@ export default {
 
     organization() {
       return this.$store.state.tenancy
+    },
+
+    sidebarWidth() {
+      return this.isSideBarPinned ? 240 : 80
     }
   },
 
@@ -85,9 +108,25 @@ export default {
       this.isShowingNotificationWidget = !this.isShowingNotificationWidget
     },
 
+    toggleSideBar() {
+      this.isSideBarPinned = !this.isSideBarPinned
+    },
+
     displayNotifications(type, text) {
       this.$notify({type, text})
     }
   }
 }
 </script>
+
+<style scoped>
+.sidebar {
+  @apply flex;
+  @apply flex-col;
+  @apply h-screen;
+  @apply delay-75;
+  @apply bg-gray-900;
+  @apply duration-100;
+  position: relative;
+}
+</style>
