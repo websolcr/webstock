@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Events\SwitchTenant;
+use function session;
+use function tenancy;
 use App\Models\Tenant;
-use App\Http\Controllers\Controller;
+use function response;
+use App\Events\SwitchTenant;
 
 class TenantInitializeController extends Controller
 {

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\InvitationSend;
 use App\Events\SwitchTenant;
+use App\Events\InvitationSend;
 use App\Listeners\SaveOnAudit;
 use App\Events\InvitationAccept;
 use Illuminate\Auth\Events\Registered;

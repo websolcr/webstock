@@ -3,8 +3,8 @@
 namespace App\Actions\Tenant;
 
 use App\Models\User;
+use App\Models\Member;
 use App\Models\Invitation;
-use App\Models\Domain\Member;
 use App\Events\InvitationAccept;
 
 class AttachInvitedUserToOrganizationAction

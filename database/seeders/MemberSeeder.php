@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Domain\Member;
+use App\Models\Member;
 use Illuminate\Database\Seeder;
 
 class MemberSeeder extends Seeder

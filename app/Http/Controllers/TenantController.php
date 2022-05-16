@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
+use function auth;
+use function request;
 use App\Models\Tenant;
+use function response;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
 
 class TenantController extends Controller
 {
