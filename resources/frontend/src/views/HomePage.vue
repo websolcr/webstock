@@ -28,24 +28,17 @@
     <div class="mt-1 w-full flex flex-col p-3">
       home page content goes here
     </div>
-
-    <home-page-edit-widget
-      :is-showing="isShowingEditWidget"
-      @toggle-edit-widget="toggleEditWidget"
-    />
   </div>
 </template>
 
 <script>
 import TitleBar from "@/components/common/TitleBar"
 import PushButton from "@/components/common/PushButton"
-import HomePageEditWidget from "@/views/HomePageEditWidget"
 
 export default {
   name: "HomePage",
 
   components: {
-    HomePageEditWidget,
     TitleBar,
     PushButton,
   },

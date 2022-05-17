@@ -13,13 +13,17 @@ use Illuminate\Support\Facades\Mail;
 
 class InvitationSendAction
 {
+    protected string $receiver;
+
     public function __invoke(string $receiver): void
     {
-        if ($this->existingUser($receiver) && $this->existingMember($receiver)) {
+        $this->receiver = $receiver;
+
+        if ($this->existingUser() && $this->existingMember()) {
             return;
         }
 
-        $invitation = $this->getReceiversInvitation($receiver);
+        $invitation = $this->getReceiversInvitation();
 
         $url = URL::signedRoute('invitation.accept', [
             'invitation_token' => $invitation->token,
@@ -34,30 +38,30 @@ class InvitationSendAction
         event(new InvitationSend($invitation));
     }
 
-    protected function existingUser(string $receiver): ?User
+    protected function existingUser(): ?User
     {
-        return User::firstWhere('email', $receiver);
+        return User::firstWhere('email', $this->receiver);
     }
 
-    protected function existingMember(string $receiver): bool
+    protected function existingMember(): bool
     {
-        return Member::firstWhere('global_id', $this->existingUser($receiver)->id)->exists();
+        return Member::firstWhere('global_id', $this->existingUser()->id)->exists();
     }
 
-    protected function getReceiversInvitation(string $receiver): Invitation
+    protected function getReceiversInvitation(): Invitation
     {
-        return $this->receiverAlreadyInvited($receiver) ?? $this->createNewInvitation($receiver);
+        return $this->receiverAlreadyInvited() ?? $this->createNewInvitation();
     }
 
-    protected function receiverAlreadyInvited(string $receiver): ?Invitation
+    protected function receiverAlreadyInvited(): ?Invitation
     {
-        return Invitation::where('email', $receiver)->where('tenant_id', tenant('id'))->first();
+        return Invitation::where('email', $this->receiver)->where('tenant_id', tenant('id'))->first();
     }
 
-    protected function createNewInvitation(string $receiver): Invitation
+    protected function createNewInvitation(): Invitation
     {
         return Invitation::create([
-            'email' => $receiver,
+            'email' => $this->receiver,
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
         ]);

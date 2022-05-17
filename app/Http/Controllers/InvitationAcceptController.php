@@ -18,8 +18,6 @@ class InvitationAcceptController extends Controller
         if (auth()->user()) {
             tenancy()->end();
             auth()->logout();
-
-            //todo: send response to frontend for clear browser local storage
         }
 
         $invitation = Invitation::firstWhere('token', $request->get('invitation_token'));
