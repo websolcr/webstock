@@ -78,23 +78,21 @@ export default {
 
       await this.$http.post('invitation-send', {email_to: this.form.email_to})
         .then(response => {
-          if (response.status === 200) {
-            this.form.email_to = ''
-            this.errors = {}
-
+          if (response.status === 204) {
             this.$wait.end('send-invitation')
+            this.form.email_to = ''
             this.$emit('toggleSendInvitationWidget')
           }
         }).catch(errors => {
           if (errors.response.status === 422){
+            this.$wait.end('send-invitation')
             this.errors = errors.response.data.errors
           }
 
           if (errors.response.status === 500){
+            this.$wait.end('send-invitation')
             this.errors[0] = [errors.response.data.message]
           }
-
-          this.$wait.end('send-invitation')
         })
     },
   }

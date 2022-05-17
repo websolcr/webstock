@@ -14,5 +14,7 @@ class InvitationSendController extends Controller
         ]);
 
         DB::transaction(fn () => $invitationSendAction(request('email_to')));
+
+        return response()->noContent();
     }
 }
