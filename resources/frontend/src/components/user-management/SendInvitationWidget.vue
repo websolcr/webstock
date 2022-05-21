@@ -66,9 +66,10 @@ export default {
     async invite() {
       this.$wait.start('send-invitation')
 
-      await this.$http.post('invitation-send', {email_to: this.form.email_to})
+      await this.$http.post('invitations/store', {email_to: this.form.email_to})
         .then(response => {
-          if (response.status === 200) {
+          console.log(response)
+          if (response.status === 204) {
             this.form = {
               email_to: ''
             }

@@ -10,6 +10,8 @@
     <chevron-down v-if="icon === 'chevron-down'" />
     <chevron-up v-if="icon === 'chevron-up'" />
     <tick v-if="icon === 'tick'" />
+    <ticket-icon v-if="icon === 'ticket'" />
+    <filter-icon v-if="icon === 'filter'" />
     <right-arrow v-if="icon === 'rightArrow' || icon === 'next' || icon === 'right'" />
     <left-arrow v-if="icon === 'leftArrow' || icon === 'previous' || icon === 'left'" />
   </div>
@@ -28,11 +30,15 @@ import InformationIcon from "@/components/common/svg-icon/InformationIcon"
 import ChevronDown from "@/components/common/svg-icon/ChevronDown"
 import ChevronUp from "@/components/common/svg-icon/ChevronUp"
 import Tick from "@/components/common/svg-icon/Tick"
+import TicketIcon from "@/components/common/svg-icon/TicketIcon"
+import FilterIcon from "@/components/common/svg-icon/FilterIcon"
 
 export default {
   name: 'SvgIcon',
 
   components: {
+    FilterIcon,
+    TicketIcon,
     Tick,
     ChevronDown,
     ChevronUp,

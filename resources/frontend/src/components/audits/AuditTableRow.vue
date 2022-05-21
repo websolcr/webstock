@@ -1,7 +1,7 @@
 <template>
   <div class="flex divide-x divide-blue-200">
     <div class="audit-table-row-item">
-      {{ audit.member }}
+      {{ audit.member_id }}
     </div>
     <div class="audit-table-row-item">
       {{ audit.area }}

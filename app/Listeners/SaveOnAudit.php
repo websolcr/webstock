@@ -10,7 +10,7 @@ class SaveOnAudit
     public function handle(AuditableEvent $event)
     {
         Audit::create([
-            'member' => $event->member(),
+            'member_id' => $event->member(),
             'area' => $event->area(),
             'action' => $event->action(),
             'before_value' => $event->beforeValue(),

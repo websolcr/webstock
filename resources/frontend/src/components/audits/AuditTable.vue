@@ -74,6 +74,6 @@ export default {
 .table-body-style {
   @apply flex;
   @apply flex-col;
-  height: calc(100vh - 250px);
+  max-height: calc(100vh - 300px);
 }
 </style>

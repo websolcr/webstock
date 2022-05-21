@@ -1,15 +1,14 @@
 <template>
-  <button
-    class="relative text-sm ease-linear duration-100 rounded px-3 py-1 font-sans font-semibold"
+  <div
+    class="relative text-sm ease-linear duration-100 rounded px-3 py-1 font-sans font-semibold h-fit"
     :class="[
       disabled ? disabledClasses : activeClasses
     ]"
-    :disabled="disabled"
   >
     <span class="spinner" />
     <span>{{ label }}</span>
     <slot name="extra" />
-  </button>
+  </div>
 </template>
 
 <script>
@@ -32,15 +31,14 @@ export default {
     return {
       activeClasses: [
         'border-blue-300',
-        'hover:border-blue-500',
-        'hover:bg-blue-300',
+        'hover:border-blue-800',
+        'hover:bg-blue-800',
         'focus:border-blue-500',
-        'active:bg-blue-800',
-        'active:border-blue-800 ',
         'border border-solid',
         'bg-blue-300',
         'text-white',
         'shadow',
+        'cursor-pointer',
       ],
 
       disabledClasses: [

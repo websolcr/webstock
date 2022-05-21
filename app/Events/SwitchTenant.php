@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Member;
 use App\Models\Tenant;
 use App\Interfaces\AuditableEvent;
 use Illuminate\Queue\SerializesModels;
@@ -19,7 +20,7 @@ class SwitchTenant implements AuditableEvent
 
     public function member(): string
     {
-        return auth()->user()->name;
+        return Member::id();
     }
 
     public function area(): string

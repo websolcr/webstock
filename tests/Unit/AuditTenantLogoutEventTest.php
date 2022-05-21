@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Member;
 use App\Models\Tenant;
 use Tests\TenantTestCase;
 
@@ -12,7 +13,7 @@ class AuditTenantLogoutEventTest extends TenantTestCase
     {
         $currentlyActiveTenant = tenancy()->tenant;
 
-        $user = auth()->user();
+        auth()->user();
 
         $tenant = Tenant::create([
             'name' => 'test organization',
@@ -28,7 +29,7 @@ class AuditTenantLogoutEventTest extends TenantTestCase
         tenancy()->initialize($currentlyActiveTenant);
 
         $this->assertDatabaseHas('audits', [
-            'member' => $user->name,
+            'member_id' => Member::id(),
             'area' => 'organization',
             'action' => 'switch',
             'before_value' => tenant('name'),

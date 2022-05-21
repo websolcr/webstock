@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Member;
 use App\Models\Invitation;
 use App\Interfaces\AuditableEvent;
 use Illuminate\Queue\SerializesModels;
@@ -31,7 +32,7 @@ class InvitationSend implements ShouldBroadcast, AuditableEvent
 
     public function member(): string
     {
-        return auth()->user()->name;
+        return Member::id();
     }
 
     public function area(): string

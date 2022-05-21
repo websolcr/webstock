@@ -36,7 +36,7 @@ class InvitationFeatureTest extends TenantTestCase
         ], self::CENTRAL_DATABASE_CONNECTION);
 
         $this->assertDatabaseHas('audits', [
-            'member' => auth()->user()->name,
+            'member_id' => Member::id(),
             'area' => 'invitation',
             'action' => 'send',
             'before_value' => null,
@@ -146,7 +146,7 @@ class InvitationFeatureTest extends TenantTestCase
         ], self::CENTRAL_DATABASE_CONNECTION);
 
         $this->assertDatabaseHas('audits', [
-            'member' => auth()->user()->name,
+            'member_id' => Member::id(),
             'area' => 'invitation',
             'action' => 'accept',
             'before_value' => null,
@@ -190,7 +190,7 @@ class InvitationFeatureTest extends TenantTestCase
         ], self::CENTRAL_DATABASE_CONNECTION);
 
         $this->assertDatabaseHas('audits', [
-            'member' => $user->name,
+            'member_id' => Member::id(),
             'area' => 'invitation',
             'action' => 'accept',
             'before_value' => null,
@@ -286,8 +286,6 @@ class InvitationFeatureTest extends TenantTestCase
     /** @test */
     public function already_invited_user_will_recieved_same_invitation_again_when_someone_invited_again()
     {
-        $this->withoutExceptionHandling();
-
         Event::fake(InvitationSend::class);
 
         Invitation::factory()->create([

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\HasUuid;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Audit extends AppModel
@@ -12,7 +13,7 @@ class Audit extends AppModel
 
     protected $fillable = [
         'area',
-        'member',
+        'member_id',
         'action',
         'after_value',
         'before_value',
@@ -21,4 +22,9 @@ class Audit extends AppModel
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
     ];
+
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

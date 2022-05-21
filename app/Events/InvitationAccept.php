@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\User;
+use App\Models\Member;
 use App\Models\Invitation;
 use App\Interfaces\AuditableEvent;
 use Illuminate\Queue\SerializesModels;
@@ -33,7 +34,7 @@ class InvitationAccept implements ShouldBroadcast, AuditableEvent
 
     public function member(): string
     {
-        return $this->user->name;
+        return Member::where('global_id', $this->user->id)->first()->id;
     }
 
     public function area(): string
