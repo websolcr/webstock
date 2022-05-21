@@ -8,15 +8,6 @@
     </template>
 
     <template #body>
-      <div v-if="Object.keys(errors).length">
-        <div
-          v-for="error in errors"
-          :key="error"
-          class="text-red-300 text-xs"
-        >
-          {{ error[0] }}
-        </div>
-      </div>
       <base-input
         id="email_to"
         v-model="form.email_to"
@@ -62,7 +53,6 @@ export default {
       form: {
         email_to: ''
       },
-      errors: [],
     }
   },
 
@@ -76,23 +66,29 @@ export default {
     async invite() {
       this.$wait.start('send-invitation')
 
-      await this.$http.post('invitations/store', {email_to: this.form.email_to})
+      await this.$http.post('invitation-send', {email_to: this.form.email_to})
         .then(response => {
-          if (response.status === 204) {
+          if (response.status === 200) {
+            this.form = {
+              email_to: ''
+            }
+
             this.$wait.end('send-invitation')
-            this.form.email_to = ''
+
+            this.$notify({ type: 'success', text: 'Invitation was sent successfully' })
+
             this.$emit('toggleSendInvitationWidget')
           }
         }).catch(errors => {
           if (errors.response.status === 422){
-            this.$wait.end('send-invitation')
-            this.errors = errors.response.data.errors
+            this.$notify({ type: 'error', title:'Oops', text: 'Oops...y' })
           }
 
           if (errors.response.status === 500){
-            this.$wait.end('send-invitation')
-            this.errors[0] = [errors.response.data.message]
+            this.$notify({ type: 'error', text: errors.response.data.message })
           }
+
+          this.$wait.end('send-invitation')
         })
     },
   }

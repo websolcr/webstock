@@ -9,6 +9,10 @@
     <div v-else>
       <router-view />
     </div>
+    <notifications
+      position="top right"
+      class="mt-5"
+    />
   </div>
 </template>
 

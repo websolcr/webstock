@@ -6,6 +6,7 @@ import store from "@/store"
 import router from "@/routes"
 import SvgIcon from "@/components/common/SvgIcon"
 import pusher from "@/plugins/pusher"
+import Notifications from '@kyvg/vue3-notification'
 import {VTooltip, VClosePopper, Dropdown, Tooltip, Menu} from 'floating-vue'
 
 import './index.css'
@@ -32,5 +33,6 @@ app.directive('close-popper', VClosePopper)
 app.use(store)
 app.use(router)
 app.use(pusher)
+app.use(Notifications)
 app.use(createVueWait())
 app.mount('#app')
