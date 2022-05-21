@@ -7,6 +7,9 @@
     <logout-icon v-if="icon === 'logout'" />
     <information-icon v-if="icon === 'info'" />
     <documents-icon v-if="icon === 'document'" />
+    <chevron-down v-if="icon === 'chevron-down'" />
+    <chevron-up v-if="icon === 'chevron-up'" />
+    <tick v-if="icon === 'tick'" />
     <right-arrow v-if="icon === 'rightArrow' || icon === 'next' || icon === 'right'" />
     <left-arrow v-if="icon === 'leftArrow' || icon === 'previous' || icon === 'left'" />
   </div>
@@ -22,11 +25,17 @@ import LogoutIcon from "@/components/common/svg-icon/LogoutIcon"
 import PencilIcon from "@/components/common/svg-icon/PencilIcon"
 import DocumentsIcon from "@/components/common/svg-icon/DocumentsIcon"
 import InformationIcon from "@/components/common/svg-icon/InformationIcon"
+import ChevronDown from "@/components/common/svg-icon/ChevronDown"
+import ChevronUp from "@/components/common/svg-icon/ChevronUp"
+import Tick from "@/components/common/svg-icon/Tick"
 
 export default {
   name: 'SvgIcon',
 
   components: {
+    Tick,
+    ChevronDown,
+    ChevronUp,
     DocumentsIcon,
     InformationIcon,
     PencilIcon,
