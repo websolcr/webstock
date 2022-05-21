@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between p-3">
-    <div class="font-bold">
+    <div class="font-bold text-2xl">
       <slot
         name="title"
       />

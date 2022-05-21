@@ -9,6 +9,6 @@ class AuditsController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Audit::all());
+        return response()->json(Audit::latest()->get());
     }
 }
