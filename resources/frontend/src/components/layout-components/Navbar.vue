@@ -5,7 +5,7 @@
   >
     <div class="flex gap-3">
       <router-link :to="{name: 'Home'}">
-        <div class="text-3xl font-bold text-white">
+        <div class="text-lg font-bold text-white">
           {{ organization.tenant.name }} |
         </div>
       </router-link>

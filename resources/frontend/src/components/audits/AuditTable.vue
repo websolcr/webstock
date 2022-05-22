@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-col">
+    <div class="flex flex-col overflow-y-scroll shadow bg-white">
       <div class="table-header-style">
         <div class="audit-table-header-item">
           member
@@ -58,22 +58,22 @@ export default {
   @apply text-sm;
   @apply items-center;
   @apply justify-center;
+  @apply divide-x;
+  @apply divide-blue-200;
+  @apply border-b border-blue-200;
 }
 
 .audit-table-header-item {
-  @apply border-2;
-  @apply border-blue-200;
   @apply w-1/6;
   @apply font-bold;
   @apply uppercase;
   @apply text-center;
-  @apply text-gray-900;
+  @apply text-blue-900;
 }
 
 .table-body-style {
   @apply flex;
   @apply flex-col;
-  @apply overflow-y-scroll;
   height: calc(100vh - 250px);
 }
 </style>

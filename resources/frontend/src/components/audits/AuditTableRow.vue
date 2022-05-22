@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex divide-x divide-blue-200">
     <div class="audit-table-row-item">
       {{ audit.member }}
     </div>
@@ -37,9 +37,10 @@ export default {
 <style scoped>
 .audit-table-row-item {
   @apply w-1/6;
-  @apply border-2;
+  @apply border-b;
+  @apply border-blue-200;
   @apply text-center;
   @apply text-gray-900;
-  @apply border-blue-100;
+  @apply bg-white;
 }
 </style>
