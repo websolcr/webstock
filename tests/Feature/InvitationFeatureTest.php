@@ -19,13 +19,13 @@ class InvitationFeatureTest extends TenantTestCase
     const CENTRAL_DATABASE_CONNECTION = 'pgsql_test';
 
     /** @test */
-    public function can_send_invitation()
+    public function can_store_invitation()
     {
         Mail::fake();
 
         $receiver = 'testmail@test.com';
 
-        $this->postJson('api/invitation-send', [
+        $this->postJson('api/invitations/store', [
             'email_to' => $receiver,
             'auditable' => true,
         ]);
@@ -209,7 +209,7 @@ class InvitationFeatureTest extends TenantTestCase
     {
         Event::fake(InvitationSend::class);
 
-        $this->postJson('api/invitation-send', [
+        $this->postJson('api/invitations/store', [
             'email_to' => 'testmail@test.com',
         ]);
 
@@ -270,7 +270,7 @@ class InvitationFeatureTest extends TenantTestCase
             'global_id' => $user->id,
         ]);
 
-        $response = $this->postJson('api/invitation-send', [
+        $response = $this->postJson('api/invitations/store', [
             'email_to' => $user->email,
             'auditable' => true,
         ]);
@@ -290,12 +290,12 @@ class InvitationFeatureTest extends TenantTestCase
 
         Event::fake(InvitationSend::class);
 
-        $invitation = Invitation::factory()->create([
+        Invitation::factory()->create([
             'email' => 'testmail@test.com',
             'token' => Str::random(200),
         ]);
 
-        $this->postJson('api/invitation-send', [
+        $this->postJson('api/invitations/store', [
             'email_to' => 'testmail@test.com',
         ]);
 
