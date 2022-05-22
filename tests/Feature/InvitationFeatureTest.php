@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\Member;
 use Tests\TenantTestCase;
 use App\Models\Invitation;
 use Illuminate\Support\Str;
@@ -20,8 +21,6 @@ class InvitationFeatureTest extends TenantTestCase
     /** @test */
     public function can_send_invitation()
     {
-        $this->withoutExceptionHandling();
-
         Mail::fake();
 
         $receiver = 'testmail@test.com';
@@ -260,5 +259,52 @@ class InvitationFeatureTest extends TenantTestCase
         $response = $this->get($invitationUrl);
 
         $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function cant_invite_member_who_is_already_a_member()
+    {
+        $user = User::factory()->create();
+
+        Member::create([
+            'global_id' => $user->id,
+        ]);
+
+        $response = $this->postJson('api/invitation-send', [
+            'email_to' => $user->email,
+            'auditable' => true,
+        ]);
+
+        $response->assertStatus(204);
+
+        $this->assertDatabaseMissing('invitations', [
+            'email' => $user->email,
+            'tenant_id' => tenant('id'),
+        ], self::CENTRAL_DATABASE_CONNECTION);
+    }
+
+    /** @test */
+    public function already_invited_user_will_recieved_same_invitation_again_when_someone_invited_again()
+    {
+        $this->withoutExceptionHandling();
+
+        Event::fake(InvitationSend::class);
+
+        $invitation = Invitation::factory()->create([
+            'email' => 'testmail@test.com',
+            'token' => Str::random(200),
+        ]);
+
+        $this->postJson('api/invitation-send', [
+            'email_to' => 'testmail@test.com',
+        ]);
+
+        $this->assertDatabaseCount('invitations', 1, self::CENTRAL_DATABASE_CONNECTION);
+
+        Event::assertDispatched(InvitationSend::class, function ($event) {
+            return [
+                $event->invitation->email = 'testmail@test.com',
+            ];
+        });
     }
 }

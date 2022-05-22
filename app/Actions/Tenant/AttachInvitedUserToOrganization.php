@@ -11,12 +11,10 @@ class AttachInvitedUserToOrganization
      */
     public function handle($request, $next)
     {
-        if (! $request->has('invitation_token')) {
-            return $next($request);
+        if ($request->has('invitation_token')) {
+            app(AttachInvitedUserToOrganizationAction::class)
+                ->handle($request->invitation_token, auth()->user());
         }
-
-        app(AttachInvitedUserToOrganizationAction::class)
-            ->handle($request->invitation_token, auth()->user());
 
         return $next($request);
     }
