@@ -42,5 +42,6 @@ export default {
   @apply text-center;
   @apply text-gray-900;
   @apply bg-white;
+  @apply align-middle;
 }
 </style>
