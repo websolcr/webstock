@@ -74,22 +74,20 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.$pusher.subscribe('private-invitations' + this.organization.tenant.id)
-      .bind('sent', function (data) {
-        console.log('sent')
-        console.log(data)
-      })
-      .bind('accept', function (data) {
-        console.log('accept')
-        console.log(data)
-      })
+      .bind('sent', (data) => console.log(data))
+      .bind('accept', (data) => this.displayNotifications('success', data.invitation.email + ' is now a member'))
   },
 
   methods: {
     toggleNotificationWidget() {
       this.isShowingNotificationWidget = !this.isShowingNotificationWidget
     },
+
+    displayNotifications(type, text) {
+      this.$notify({type, text})
+    }
   }
 }
 </script>

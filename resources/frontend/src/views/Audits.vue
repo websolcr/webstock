@@ -21,7 +21,7 @@ import TitleBar from "@/components/common/TitleBar"
 import AuditTable from "@/components/audits/AuditTable"
 
 export default {
-  name: "Audits",
+  name: "AuditsPage",
 
   components: {
     AuditTable,
