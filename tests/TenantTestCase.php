@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use App\Models\Member;
 use App\Models\Tenant;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -31,6 +32,10 @@ abstract class TenantTestCase extends TestCase
 
         tenancy()->initialize($tenant);
         session(['tenant_id' => $tenant->id]);
+
+        Member::create([
+            'global_id' => auth()->id(),
+        ]);
 
         return $tenant;
     }

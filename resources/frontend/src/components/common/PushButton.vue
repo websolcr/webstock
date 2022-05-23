@@ -1,11 +1,11 @@
 <template>
   <button
+    v-tooltip="tooltip"
     class="relative duration-100 rounded-full px-2.5 py-2 shadow-lg font-normal bg-white button-size items-center"
     :class="[isActive? 'bg-blue-300' : '']"
   >
     <div>
       <svg-icon
-        v-tooltip="tooltip"
         :icon="icon"
       />
     </div>
