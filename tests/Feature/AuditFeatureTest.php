@@ -13,7 +13,7 @@ class AuditFeatureTest extends TenantTestCase
         Audit::factory(10)->create();
 
         $response = $this->getJson('api/audits?'.http_build_query([
-            'perPage' => 5
+            'perPage' => 5,
             ]));
 
         $response->assertJsonCount(5, 'data');
@@ -27,12 +27,13 @@ class AuditFeatureTest extends TenantTestCase
             'area' => 'invitation',
         ]);
 
-        $response = $this->getJson('api/audits?' . http_build_query([
+        $response = $this->getJson('api/audits?'.http_build_query(
+            [
                     'action' => 'send',
                     'area' => 'invitation',
-                    'perPage' => 5
+                    'perPage' => 5,
                 ]
-            ));
+        ));
 
         $response->assertJsonCount(1, 'data');
     }
