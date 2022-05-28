@@ -160,7 +160,7 @@ export default {
       this.$wait.start('fetch-audits')
 
       const {data} = await this.$http.get('audits')
-      this.audits = data
+      this.audits = data.data
 
       this.$wait.end('fetch-audits')
     },
@@ -228,11 +228,11 @@ export default {
 
       this.$wait.start('fetch-audits')
 
-      const { data } = await this.$http.get('audits/filter', {
+      const { data } = await this.$http.get('audits', {
         params: this.filters
       })
 
-      this.audits = data
+      this.audits = data.data
 
       this.$wait.end('fetch-audits')
     }
