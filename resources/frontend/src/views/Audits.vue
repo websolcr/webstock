@@ -47,8 +47,8 @@
         />
 
         <div
+          v-if="hasSelectedFilters"
           class="text-xs flex justify-between ml-6 mt-1 cursor-pointer gap-1"
-          :class="!hasSelectedFilters ? 'cursor-not-allowed text-gray-600' : ''"
           @click="resetFilters"
         >
           <svg-icon icon="ticket" />
@@ -56,16 +56,24 @@
         </div>
 
         <base-button
-          :disabled="!hasSelectedFilters"
+          v-if="hasSelectedFilters"
           label="apply filters"
           class="text-sm ml-6"
-          @click="fetchFilteredData"
+          @click="fetchAudits"
         />
       </div>
-      <audit-table :audits="audits" />
-      <div class="bg-blue-400">
-        pagination
-      </div>
+
+      <audit-table
+        v-if="!$wait.is('fetch-audits')"
+        :audits="audits.data"
+      />
+
+      <pagination-bar
+        v-if="!$wait.is('fetch-audits')"
+        :dataset="audits"
+        @set-per-page="setPerPage"
+        @go-to-page="goToPage"
+      />
     </div>
   </div>
 </template>
@@ -73,20 +81,28 @@
 <script>
 import TitleBar from "@/components/common/TitleBar"
 import AuditTable from "@/components/audits/AuditTable"
-import MultiselectDropdown from "@/components/common/MultiselectDropdown"
 import BaseButton from "@/components/common/BaseButton"
 import PushButton from "@/components/common/PushButton"
+import PaginationBar from "@/components/common/pagination/PaginationBar"
+import MultiselectDropdown from "@/components/common/MultiselectDropdown"
 
 const INITIAL_FILTERS = {
   members: [],
   areas: [],
   actions: [],
+  perPage: 10,
+}
+
+const INITIAL_PAGINATION = {
+  perPage: 10,
+  page: 1,
 }
 
 export default {
   name: "AuditsPage",
 
   components: {
+    PaginationBar,
     PushButton,
     BaseButton,
     MultiselectDropdown,
@@ -98,6 +114,7 @@ export default {
     return {
       audits: [],
       filters: {...INITIAL_FILTERS},
+      paginator: {...INITIAL_PAGINATION},
       members: [],
       actions: [],
       areas: [],
@@ -148,19 +165,22 @@ export default {
     },
   },
 
-  created() {
-    this.fetchAudits()
-    this.fetchMembers()
-    this.fetchActions()
-    this.fetchAreas()
+  async created() {
+    await this.fetchAudits()
+    await this.fetchMembers()
+    await this.fetchActions()
+    await this.fetchAreas()
   },
 
   methods: {
     async fetchAudits() {
       this.$wait.start('fetch-audits')
 
-      const {data} = await this.$http.get('audits')
-      this.audits = data.data
+      const { data } = await this.$http.get('audits', {
+        params: {...this.filters, ...this.paginator}
+      })
+
+      this.audits = data
 
       this.$wait.end('fetch-audits')
     },
@@ -168,9 +188,9 @@ export default {
     resetFilters() {
       this.dropdownKey ++
 
-      this.fetchAudits()
-
       this.filters = {...INITIAL_FILTERS}
+
+      this.fetchAudits()
     },
 
     async fetchMembers() {
@@ -221,20 +241,20 @@ export default {
       this.$wait.end('fetch-areas')
     },
 
-    async fetchFilteredData() {
-      if (!this.hasSelectedFilters) {
-        return
+    setPerPage(perPage) {
+      this.paginator = {
+        ...this.paginator, perPage
       }
 
-      this.$wait.start('fetch-audits')
+      this.fetchAudits()
+    },
 
-      const { data } = await this.$http.get('audits', {
-        params: this.filters
-      })
+    goToPage(page) {
+      this.paginator = {
+        ...this.paginator, page
+      }
 
-      this.audits = data.data
-
-      this.$wait.end('fetch-audits')
+      this.fetchAudits()
     }
   },
 }

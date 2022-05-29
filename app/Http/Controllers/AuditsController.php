@@ -19,7 +19,7 @@ class AuditsController extends Controller
                 })->when(request('areas'), function ($query) {
                     $query->whereIn('area', request('areas'));
                 })
-                ->paginate(request('perPage', 10))
+                ->paginate(request('perPage', 10), ['*'], 'page', request('page', 1))
                 ->withQueryString()
         );
     }
