@@ -57,6 +57,7 @@ class InvitationFeatureTest extends TenantTestCase
             'email' => $user->email,
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id'=> $user->id,
         ]);
 
         $invitationUrl = URL::signedRoute('invitation.accept', [
@@ -76,10 +77,13 @@ class InvitationFeatureTest extends TenantTestCase
     /** @test */
     public function when_change_invitation_signature_process_will_abort()
     {
+        $user = User::factory()->create();
+
         $invitation = Invitation::factory()->create([
             'email' => 'newuser@test.com',
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id'=> $user->id,
         ]);
 
         auth()->logout();
@@ -95,10 +99,13 @@ class InvitationFeatureTest extends TenantTestCase
     /** @test */
     public function when_non_existing_user_accept_invitation_he_will_redirect_to_register_with_invited_email()
     {
+        $user = User::factory()->create();
+
         $invitation = Invitation::factory()->create([
             'email' => 'newuser@test.com',
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id'=> $user->id,
         ]);
 
         $invitationUrl = URL::signedRoute('invitation.accept', [
@@ -125,6 +132,7 @@ class InvitationFeatureTest extends TenantTestCase
             'email' => $user->email,
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id' => auth()->id(),
         ]);
 
         auth()->logout();
@@ -169,6 +177,7 @@ class InvitationFeatureTest extends TenantTestCase
             'email' => 'newuser@test.com',
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id'=> auth()->id(),
         ]);
 
         auth()->logout();
@@ -176,7 +185,7 @@ class InvitationFeatureTest extends TenantTestCase
 
         $response = $this->post('/register', [
             'name' => $user->name,
-            'email' => $user->email,
+            'email' => $invitation->email,
             'password' => 'password',
             'password_confirmation' => 'password',
             'invitation_token' => $invitation->token,
@@ -186,7 +195,7 @@ class InvitationFeatureTest extends TenantTestCase
 
         $this->assertDatabaseHas('tenant_user', [
             'tenant_id' => $invitation->tenant_id,
-            'user_id' => User::firstWhere('email', $user->email)->id,
+            'user_id' => User::firstWhere('email', $invitation->email)->id,
         ], self::CENTRAL_DATABASE_CONNECTION);
 
         $this->assertDatabaseHas('audits', [
@@ -194,13 +203,13 @@ class InvitationFeatureTest extends TenantTestCase
             'area' => 'invitation',
             'action' => 'accept',
             'before_value' => null,
-            'after_value' => $user->email,
+            'after_value' => $invitation->email,
         ]);
 
         $this->assertSoftDeleted($invitation);
 
         $this->assertDatabaseHas('members', [
-            'global_id' => User::firstWhere('email', $user->email)->id,
+            'global_id' => User::firstWhere('email', $invitation->email)->id,
         ]);
     }
 
@@ -229,6 +238,7 @@ class InvitationFeatureTest extends TenantTestCase
             'email' => 'newuser@test.com',
             'tenant_id' => tenant('id'),
             'token' => Str::random(200),
+            'sender_id'=> auth()->id(),
         ]);
 
         auth()->logout();
@@ -262,12 +272,15 @@ class InvitationFeatureTest extends TenantTestCase
     }
 
     /** @test */
-    public function cant_invite_member_who_is_already_a_member()
+    public function cant_invite_user_who_is_already_a_member()
     {
         $user = User::factory()->create();
 
         Member::create([
             'global_id' => $user->id,
+            'name'=>$user->name,
+            'email'=>$user->email,
+            'role'=> 'admin',
         ]);
 
         $response = $this->postJson('api/invitations/store', [
@@ -288,9 +301,12 @@ class InvitationFeatureTest extends TenantTestCase
     {
         Event::fake(InvitationSend::class);
 
+        $user = User::factory()->create();
+
         Invitation::factory()->create([
             'email' => 'testmail@test.com',
             'token' => Str::random(200),
+            'sender_id'=> $user->id,
         ]);
 
         $this->postJson('api/invitations/store', [

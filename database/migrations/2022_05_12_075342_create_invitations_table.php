@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('invitations', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('sender_id')->references('id')->on('users');
             $table->string('email');
             $table->string('tenant_id');
             $table->string('token')->unique();
@@ -19,11 +20,6 @@ return new class extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('invitations');

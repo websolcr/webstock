@@ -14,9 +14,9 @@ Route::middleware('tenant')->prefix('/api')->group(function () {
 
     Route::post('invitations/store', [InvitationsController::class, 'store']);
 
-    Route::get('audits', [AuditsController::class, 'index']);
-
     Route::get('members', [MembersController::class, 'index']);
+
+    Route::get('audits', [AuditsController::class, 'index']);
 
     Route::get('audit-data', [AuditDataController::class, 'index']);
 });

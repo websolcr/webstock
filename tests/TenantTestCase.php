@@ -34,7 +34,10 @@ abstract class TenantTestCase extends TestCase
         session(['tenant_id' => $tenant->id]);
 
         Member::create([
-            'global_id' => auth()->id(),
+            'global_id'=>auth()->id(),
+            'name'=>$user->name,
+            'email'=>$user->email,
+            'role'=> 'role',
         ]);
 
         return $tenant;

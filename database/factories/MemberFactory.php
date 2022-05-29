@@ -11,6 +11,9 @@ class MemberFactory extends Factory
     {
         return [
             'global_id' => Str::uuid()->toString(),
+            'name'=>$this->faker->name(),
+            'email'=>$this->faker->unique()->safeEmail(),
+            'role'=> 'admin',
         ];
     }
 }
