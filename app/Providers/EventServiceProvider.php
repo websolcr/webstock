@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\SwitchTenant;
 use App\Events\InvitationSend;
 use App\Listeners\SaveOnAudit;
 use App\Events\InvitationAccept;
@@ -20,10 +19,6 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-        ],
-
-        SwitchTenant::class => [
-          SaveOnAudit::class,
         ],
 
         InvitationSend::class => [

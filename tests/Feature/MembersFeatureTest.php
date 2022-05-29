@@ -14,6 +14,6 @@ class MembersFeatureTest extends TenantTestCase
 
         $response = $this->getJson('/api/members');
 
-        $response->assertJsonCount(13);
+        $response->assertJsonCount(Member::count());
     }
 }

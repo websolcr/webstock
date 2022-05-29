@@ -3,7 +3,7 @@
     <div
       v-for="link in links"
       :key="link"
-      class="text-blue-600 bg-white p-2 border border-blue-400 rounded cursor-pointer hover:underline"
+      class="text-blue-600 bg-white p-2 border border-blue-400 rounded cursor-pointer hover:underline text-xs"
       :class="[link.active ? 'font-bold' : '']"
       @click="goToPage(link)"
     >
