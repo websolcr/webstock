@@ -1,23 +1,25 @@
 <template>
   <div class="flex flex-row gap-3">
-    <div>Per page :</div>
+    <div class="text-xs">
+      Per page :
+    </div>
 
     <div>
       <div
         v-if="isShowing"
-        class="flex flex-col bg-white text-sm text-blue-600 w-fit px-4 py-2 rounded-lg border border-blue-400 shadow absolute z-10"
+        class="flex flex-col bg-white text-xs text-blue-600 w-fit px-4 py-2 rounded-lg border border-blue-400 shadow absolute z-10"
       >
         <div
           v-for="paginationValue in numberOfRows"
           :key="paginationValue"
-          class="flex cursor-pointer hover:text-gray-900 gap-3"
+          class="flex cursor-pointer hover:text-gray-900 gap-3 text-xs"
           @click="setPerPage(paginationValue)"
         >
           {{ paginationValue }}
         </div>
       </div>
       <div
-        class="flex flex-col bg-white text-sm text-blue-600 w-fit px-4 py-1 rounded-lg border border-blue-400 shadow"
+        class="flex flex-col bg-white text-xs text-blue-600 w-fit px-4 py-1 rounded-lg border border-blue-400 shadow"
         @click="isShowing = !isShowing"
       >
         <div class="uppercase text-sm">

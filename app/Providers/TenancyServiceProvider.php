@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use App\Actions\Tenant\AttachOwnerToTenant;
+use App\Actions\Tenant\AddOwnerToOrganization;
 
 class TenancyServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,7 @@ class TenancyServiceProvider extends ServiceProvider
                 JobPipeline::make([
                     Jobs\CreateDatabase::class,
                     Jobs\MigrateDatabase::class,
-                    Jobs\SeedDatabase::class,
+//                    Jobs\SeedDatabase::class,
                     AttachOwnerToTenant::class,
 
                     // Your own jobs to prepare the tenant.
@@ -63,7 +64,9 @@ class TenancyServiceProvider extends ServiceProvider
 
             // Database events
             Events\DatabaseCreated::class => [],
-            Events\DatabaseMigrated::class => [],
+            Events\DatabaseMigrated::class => [
+                AddOwnerToOrganization::class,
+            ],
             Events\DatabaseSeeded::class => [],
             Events\DatabaseRolledBack::class => [],
             Events\DatabaseDeleted::class => [],

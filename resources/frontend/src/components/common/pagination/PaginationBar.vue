@@ -7,7 +7,7 @@
       />
     </div>
 
-    <div>
+    <div class="text-xs">
       {{ dataset.current_page }} of {{ dataset.last_page }} pages
     </div>
     <div class="flex flex-row">
