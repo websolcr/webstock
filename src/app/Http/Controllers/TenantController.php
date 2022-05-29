@@ -29,4 +29,9 @@ class TenantController extends Controller
 
         return response()->noContent();
     }
+
+    public function show(): JsonResponse
+    {
+        return response()->json(tenancy());
+    }
 }

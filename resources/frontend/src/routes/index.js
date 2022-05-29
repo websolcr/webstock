@@ -2,12 +2,12 @@ import {createRouter, createWebHistory} from "vue-router"
 
 import store from "@/store"
 import Audits from "@/views/Audits"
-import HomePage from "@/views/HomePage"
 import AppLayout from "@/layout/AppLayout"
 import UserManagement from "@/views/UserManagement"
 import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
 import CreateOrganization from "@/views/organization/OrganizationCreate"
 import OrganizationIndex from "@/views/organization/OrganizationIndex"
+import Dashboard from "@/views/Dashboard"
 
 const routes = [
   {
@@ -30,14 +30,14 @@ const routes = [
   },
   {
     path: '/',
-    name: 'Dashboard',
+    name: 'Home',
     meta: {auth: true, tenant: true},
     component: AppLayout,
     children: [
       {
-        path: '/home',
-        name: 'Home',
-        component: HomePage,
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: Dashboard,
       },
       {
         path: '/user-management',
@@ -59,13 +59,23 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
-  if (to.meta.tenant && !store.state.tenancy) {
-    next({name: 'OrganizationIndex'})
+  if (to.path === '/'){
+    next({name: 'Dashboard'})
+    return
   }
 
-  if (to.path === '/') {
-    next({name: 'Home'})
+  if (to.path === '/dashboard') {
+    store.dispatch('fetchActiveOrganization').then(() => {
+      !store.state.organization.id ? next({name: 'OrganizationIndex'}) : next()
+    })
+    return
+  }
+
+  if (to.meta.tenant && !store.state.organization) {
+    store.commit('resetOrganization')
+
+    next({name: 'OrganizationIndex'})
+    return
   }
 
   next()

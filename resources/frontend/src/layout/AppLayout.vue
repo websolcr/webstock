@@ -37,6 +37,7 @@
     <div class="flex-1 bg-blue-50">
       <div>
         <Navbar
+          :organization="organization"
           :is-showing-notification-widget="isShowingNotificationWidget"
           @toggleNotificationWidget="toggleNotificationWidget"
         />
@@ -80,16 +81,13 @@ export default {
         preview:
           'Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum natus facere. Enim rerum eaque qui facilis. Numquam laudantium sed id dolores omnis in. Eos reiciendis deserunt maiores et accusamus quod dolor.',
       }),
+      organization: {},
     }
   },
 
   computed: {
     hasActiveTenant() {
-      return !!this.$store.state.tenancy
-    },
-
-    organization() {
-      return this.$store.state.tenancy
+      return !!this.$store.state.organization
     },
 
     sidebarWidth() {
@@ -97,13 +95,25 @@ export default {
     }
   },
 
-  created() {
-    this.$pusher.subscribe('private-invitations' + this.organization.tenant.id)
+  async created() {
+    await this.setActiveOrganization()
+
+    this.$pusher.subscribe('private-invitations' + this.$store.state.organization.id)
       .bind('sent', (data) => console.log(data))
       .bind('accept', (data) => this.displayNotifications('success', data.invitation.email + ' is now a member'))
   },
 
   methods: {
+    async setActiveOrganization() {
+      this.$wait.start('set-organization')
+
+      await this.$store.dispatch('fetchActiveOrganization')
+
+      this.organization = this.$store.state.organization
+
+      this.$wait.end('set-user')
+    },
+
     toggleNotificationWidget() {
       this.isShowingNotificationWidget = !this.isShowingNotificationWidget
     },
@@ -127,6 +137,5 @@ export default {
   @apply delay-75;
   @apply bg-gray-900;
   @apply duration-100;
-  position: relative;
 }
 </style>

@@ -36,7 +36,7 @@ import TitleBar from "@/components/common/TitleBar"
 import PushButton from "@/components/common/PushButton"
 
 export default {
-  name: "HomePage",
+  name: "DashboardComponent",
 
   components: {
     TitleBar,
@@ -47,6 +47,7 @@ export default {
     return{
       isShowingEditWidget: false,
       email: '',
+      organization: [],
     }
   },
 

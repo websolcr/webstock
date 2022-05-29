@@ -3,38 +3,33 @@ import axios from "axios"
 
 const store = createStore({
   state: {
-    user: JSON.parse(localStorage.getItem('user')),
+    user: {},
 
-    tenancy: JSON.parse(localStorage.getItem('tenancy')),
+    organization: {},
   },
 
   getters: {},
 
   actions: {
     async fetchAuthenticatedUser() {
-      const userData = localStorage.getItem('user')
-
-      if (userData) {
-        store.commit('setUser', JSON.parse(userData))
-
-        return
-      }
 
       const { data } = await axios.get('api/myself')
-      localStorage.setItem('user', JSON.stringify({ ...data }))
       store.commit('setUser', data)
     },
 
-    async fetchActiveTenant() {
+    async fetchActiveOrganization() {
       await axios.get('api/active-tenant')
         .then(response => {
-          localStorage.setItem('tenancy', JSON.stringify({...response.data}))
-          store.commit('setTenant', response.data)
+          store.commit('setOrganization', response.data.tenant)
         })
         .catch(error => {
           console.log(error.response)
         })
     },
+
+    resetOrganization() {
+      store.commit('resetOrganization')
+    }
   },
 
   mutations: {
@@ -42,9 +37,12 @@ const store = createStore({
       state.user = { ...payload }
     },
 
-    setTenant(state, payload) {
-      localStorage.setItem('tenancy', JSON.stringify({...payload}))
-      state.tenant = { ...payload }
+    setOrganization(state, payload) {
+      state.organization = { ...payload }
+    },
+
+    resetOrganization(state) {
+      state.organization = {}
     }
   },
   modules: {},
