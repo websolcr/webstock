@@ -6,13 +6,15 @@
   >
     <router-link
       :to="{name: namedRoute}"
-      class="flex"
+      class="flex relative"
     >
       <svg-icon
         icon="document"
         class="pr-3"
       />
-      {{ label }}
+      <div v-if="isSideBarPinned">
+        {{ label }}
+      </div>
     </router-link>
   </div>
 </template>
@@ -35,13 +37,18 @@ export default {
     tooltip: {
       type: String,
       default: null,
-    }
+    },
+
+    isSideBarPinned: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   computed: {
     isCurrent() {
       return this.$route.name === this.namedRoute
-    }
+    },
   }
 }
 </script>

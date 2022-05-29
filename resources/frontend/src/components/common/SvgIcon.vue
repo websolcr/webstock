@@ -7,6 +7,8 @@
     <logout-icon v-if="icon === 'logout'" />
     <information-icon v-if="icon === 'info'" />
     <documents-icon v-if="icon === 'document'" />
+    <arrow-circle-left v-if="icon === 'arrow-circle-left' || icon ==='arrowCircleLeft'" />
+    <arrow-circle-right v-if="icon === 'arrow-circle-right' || icon ==='arrowCircleRight'" />
     <chevron-down v-if="icon === 'chevron-down'" />
     <chevron-up v-if="icon === 'chevron-up'" />
     <tick v-if="icon === 'tick'" />
@@ -27,6 +29,8 @@ import LogoutIcon from "@/components/common/svg-icon/LogoutIcon"
 import PencilIcon from "@/components/common/svg-icon/PencilIcon"
 import DocumentsIcon from "@/components/common/svg-icon/DocumentsIcon"
 import InformationIcon from "@/components/common/svg-icon/InformationIcon"
+import ArrowCircleLeft from "@/components/common/svg-icon/ArrowCircleLeft"
+import ArrowCircleRight from "@/components/common/svg-icon/ArrowCircleRight"
 import ChevronDown from "@/components/common/svg-icon/ChevronDown"
 import ChevronUp from "@/components/common/svg-icon/ChevronUp"
 import Tick from "@/components/common/svg-icon/Tick"
@@ -37,6 +41,8 @@ export default {
   name: 'SvgIcon',
 
   components: {
+    ArrowCircleRight,
+    ArrowCircleLeft,
     FilterIcon,
     TicketIcon,
     Tick,
