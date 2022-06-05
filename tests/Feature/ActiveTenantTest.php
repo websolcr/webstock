@@ -1,16 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+test('can get initialized organization details', function () {
+    beginTestInsideTenant();
 
-use Tests\TenantTestCase;
+    $response = $this->getJson('/api/active-tenant');
 
-class ActiveTenantTest extends TenantTestCase
-{
-    /** @test */
-    public function can_give_active_tenant()
-    {
-        $response = $this->getJson('/api/active-tenant');
+    $response->assertOk();
 
-        $response->assertOk();
-    }
-}
+    endTestInsideTenant();
+});
