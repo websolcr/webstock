@@ -1,30 +1,17 @@
 <?php
 
-namespace Tests\Feature;
+test('get details of authenticated user', function () {
+    beginTestInsideTenant();
 
-use Tests\TestCase;
-use App\Models\User;
+    $response = $this->getJson('/api/myself');
 
-class AuthenticatedUserTest extends TestCase
-{
-    private function login()
-    {
-        $this->actingAs(User::factory()->create());
-    }
+    $user = auth()->user();
 
-    /** @test */
-    public function can_fetch_authenticated_user()
-    {
-        $this->login();
+    $response->assertJson([
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+    ]);
 
-        $response = $this->getJson('/api/myself');
-
-        $user = auth()->user();
-
-        $response->assertJson([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ]);
-    }
-}
+    endTestInsideTenant();
+});

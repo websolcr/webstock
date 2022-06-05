@@ -1,5 +1,5 @@
 name: API Testing
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -73,9 +73,7 @@ jobs:
 
       - name: Test with PHPUnit
         run: |
-          vendor/bin/phpunit --log-junit=results/test-report.xml --coverage-clover=results/coverage-report.clover
-          sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/*.xml
-          sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/*.clover
+          vendor/bin/pest --coverage
         env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}

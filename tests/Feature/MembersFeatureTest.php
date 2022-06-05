@@ -1,19 +1,15 @@
 <?php
 
-namespace Tests\Feature;
-
 use App\Models\Member;
-use Tests\TenantTestCase;
 
-class MembersFeatureTest extends TenantTestCase
-{
-    /** @test */
-    public function list_all_members()
-    {
-        Member::factory(10)->create();
+beforeEach(fn () => beginTestInsideTenant());
 
-        $response = $this->getJson('/api/members');
+afterEach(fn () => endTestInsideTenant());
 
-        $response->assertJsonCount(Member::count());
-    }
-}
+test('list all members', function () {
+    Member::factory(10)->create();
+
+    $response = $this->getJson('/api/members');
+
+    $response->assertJsonCount(10 + 1); //extra 1 is auth user
+});
