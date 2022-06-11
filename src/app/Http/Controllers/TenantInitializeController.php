@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use function session;
 use function tenancy;
 use App\Models\Tenant;
-use function response;
+use Illuminate\Http\JsonResponse;
 
 class TenantInitializeController extends Controller
 {
-    public function __invoke(Tenant $tenant)
+    public function __invoke(Tenant $tenant): JsonResponse
     {
         tenancy()->initialize($tenant);
 

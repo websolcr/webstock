@@ -4,9 +4,9 @@
     class="bg-indigo-500 shadow flex justify-between h-16 px-6 items-center"
   >
     <div class="flex gap-3">
-      <router-link :to="{name: 'Home'}">
+      <router-link :to="{name: 'Dashboard'}">
         <div class="text-lg font-bold text-white">
-          {{ organization.tenant.name }} |
+          {{ organization.name }} |
         </div>
       </router-link>
       <div class="text-sm flex items-end">
@@ -56,13 +56,15 @@ export default {
     isShowingNotificationWidget: {
       type: Boolean,
       required: true,
-    }
+    },
+
+    organization: {
+      type: Object,
+      required: true,
+    },
   },
 
   computed: {
-    organization() {
-      return this.$store.state.tenancy
-    },
     user() {
       return this.$store.state.user
     },
@@ -70,14 +72,10 @@ export default {
 
   methods: {
     logout() {
-      this.clearLocalStorage()
+      this.$store.dispatch('resetOrganization')
 
       const form = document.getElementById('logout-form')
       form.submit()
-    },
-    clearLocalStorage() {
-      localStorage.removeItem('user')
-      localStorage.removeItem('tenancy')
     },
   },
 }

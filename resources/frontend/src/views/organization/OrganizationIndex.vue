@@ -56,23 +56,13 @@ export default {
     },
 
     async initializeTenant(tenant) {
-      this.$wait.start('initializing-tenant')
 
-      await this.$http.post(`/tenant/${tenant.id}/initialize`)
-        .then(async (response) => {
-          await this.$store.commit('setTenant', { ...response.data })
-          this.loadTenancyHome()
+      const response  = await this.$http.post(`/tenant/${tenant.id}/initialize`)
 
-        }).catch(error => {
-          console.log(error.response)
-        })
+      this.$store.commit('setTenant', response.data.tenant)
 
-      this.$wait.end('initializing-tenant')
-    },
+      await this.$router.push('/dashboard')
 
-    loadTenancyHome() {
-      const form = document.getElementById('load-home-form')
-      form.submit()
     },
   }
 }
