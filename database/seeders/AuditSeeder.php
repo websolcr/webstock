@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Audit;
+use Domain\Audit\Models\Audit;
 use Illuminate\Database\Seeder;
 
 class AuditSeeder extends Seeder

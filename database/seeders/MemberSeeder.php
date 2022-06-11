@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Member;
 use Illuminate\Database\Seeder;
+use Domain\Member\Models\Member;
 
 class MemberSeeder extends Seeder
 {

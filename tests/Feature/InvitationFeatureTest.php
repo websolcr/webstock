@@ -3,16 +3,16 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Models\Member;
-use App\Models\Invitation;
 use Illuminate\Support\Str;
-use App\Events\InvitationSend;
-use App\Events\InvitationAccept;
-use App\Mail\MembershipInvitation;
+use Domain\Member\Models\Member;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
+use Domain\Invitation\Models\Invitation;
+use Domain\Invitation\Events\InvitationSend;
+use Domain\Invitation\Events\InvitationAccept;
 use Symfony\Component\HttpFoundation\Response;
+use Domain\Invitation\Mails\MembershipInvitation;
 
 beforeEach(fn () => beginTestInsideTenant());
 
