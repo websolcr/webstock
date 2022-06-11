@@ -3,9 +3,9 @@
 namespace Tests;
 
 use App\Models\User;
-use App\Models\Member;
 use App\Models\Tenant;
 use Illuminate\Support\Str;
+use Domain\Member\Models\Member;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 abstract class TenantTestCase extends TestCase

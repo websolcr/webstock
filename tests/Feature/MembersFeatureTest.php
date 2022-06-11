@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Member;
+use Domain\Member\Models\Member;
 
 beforeEach(fn () => beginTestInsideTenant());
 
