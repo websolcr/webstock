@@ -3,18 +3,13 @@
 namespace Domain\Audit\ServiceProviders;
 
 use Domain\Audit\Listeners\SaveOnAudit;
-use Domain\Invitation\Events\InvitationSend;
-use Domain\Invitation\Events\InvitationAccept;
+use Domain\Audit\Interfaces\AuditableEvent;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 
 class AuditServiceProvider extends EventServiceProvider
 {
     protected $listen = [
-        InvitationSend::class => [
-            SaveOnAudit::class,
-        ],
-
-        InvitationAccept::class => [
+        AuditableEvent::class => [
             SaveOnAudit::class,
         ],
     ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Audit\Factories;
+namespace Database\Factories;
 
 use App\Data\AuditData;
 use Domain\Audit\Models\Audit;

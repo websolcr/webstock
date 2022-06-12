@@ -3,7 +3,6 @@
 namespace Domain\Invitation\Events;
 
 use function tenant;
-use Domain\Member\Models\Member;
 use Illuminate\Queue\SerializesModels;
 use Domain\Invitation\Models\Invitation;
 use Domain\Audit\Interfaces\AuditableEvent;

@@ -1,14 +1,12 @@
-<!--delete this example component after you create your first widget. this is an sample-->
 <template>
   <TransitionRoot
     :show="isShowing"
   >
     <Dialog
       as="div"
-      class="relative"
     >
-      <div class="fixed inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-y-scroll">
+      <div class="fixed overflow-hidden">
+        <div class="absolute overflow-y-scroll">
           <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
             <TransitionChild
               as="template"
@@ -23,8 +21,8 @@
                 <div class="flex flex-col divide-y divide-gray-200 bg-white shadow-xl widget-styles">
                   <div class="h-0 flex-1 overflow-y-auto">
                     <div class="py-4 px-4">
-                      <div class="mt-1 flex justify-between bg-blue-50 p-2">
-                        <p class="text-sm">
+                      <div class="mt-1 flex justify-between p-2">
+                        <p class="text-lg font-bold">
                           <slot name="header" />
                         </p>
                         <svg-icon
@@ -38,7 +36,7 @@
                       <slot name="body" />
                     </div>
                   </div>
-                  <div class="flex flex-shrink-0 justify-between px-4 py-4">
+                  <div class="flex justify-between px-4 py-4">
                     <slot name="footer" />
                   </div>
                 </div>
@@ -75,7 +73,7 @@ export default {
 
 <style scoped>
 .widget-styles{
-  margin-top: 120px;
-  height: calc(100vh - 128px);
+  margin-top: 4rem;
+  height: calc(100vh - 4rem);
 }
 </style>

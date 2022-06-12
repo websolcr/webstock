@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Member\Factories;
+namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Domain\Member\Models\Member;

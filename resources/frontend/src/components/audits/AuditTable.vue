@@ -55,7 +55,7 @@ export default {
 .table-header-style{
   @apply h-8;
   @apply flex;
-  @apply text-sm;
+  @apply text-xs;
   @apply items-center;
   @apply justify-center;
   @apply divide-x;

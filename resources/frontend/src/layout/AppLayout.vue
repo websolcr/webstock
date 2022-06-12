@@ -33,6 +33,13 @@
         label="Audits"
         named-route="Audits"
       />
+
+      <sidebar-link
+        :is-side-bar-pinned="isSideBarPinned"
+        tooltip="Suppliers"
+        label="Suppliers"
+        named-route="Suppliers"
+      />
     </div>
     <div class="flex-1 bg-blue-50">
       <div>
@@ -43,7 +50,10 @@
         />
       </div>
       <div>
-        <router-view :key="$route.fullPath" />
+        <router-view
+          :key="$route.fullPath"
+          class="px-3"
+        />
       </div>
     </div>
 
