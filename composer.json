@@ -31,7 +31,10 @@
             "Domain\\": "src/domain/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "src/app/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

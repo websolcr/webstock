@@ -33,7 +33,7 @@ class InvitationSend implements ShouldBroadcast, AuditableEvent
 
     public function member(): string
     {
-        return Member::id();
+        return authMember()->id;
     }
 
     public function area(): string

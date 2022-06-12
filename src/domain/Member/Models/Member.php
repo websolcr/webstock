@@ -27,11 +27,6 @@ class Member extends BaseModel
         return MemberFactory::new();
     }
 
-    public static function id(): string
-    {
-        return self::where('global_id', auth()->id())->first()->id;
-    }
-
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
     ];
