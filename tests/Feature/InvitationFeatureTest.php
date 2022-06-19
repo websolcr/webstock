@@ -36,7 +36,7 @@ test('can send invitation', function () {
     ], CENTRAL_DATABASE_CONNECTION);
 
     $this->assertDatabaseHas('audits', [
-        'member_id' => Member::id(),
+        'member_id' => Member::where('global_id', auth()->id())->first()->id,
         'area' => 'invitation',
         'action' => 'send',
         'before_value' => null,
@@ -143,7 +143,7 @@ test('existing user becomes member after accept the invitation', function () {
     ], CENTRAL_DATABASE_CONNECTION);
 
     $this->assertDatabaseHas('audits', [
-        'member_id' => Member::id(),
+        'member_id' => Member::where('global_id', auth()->id())->first()->id,
         'area' => 'invitation',
         'action' => 'accept',
         'before_value' => null,
@@ -186,7 +186,7 @@ test('non existing user becomes member after accept the invitation', function ()
     ], CENTRAL_DATABASE_CONNECTION);
 
     $this->assertDatabaseHas('audits', [
-        'member_id' => Member::id(),
+        'member_id' => Member::where('global_id', auth()->id())->first()->id,
         'area' => 'invitation',
         'action' => 'accept',
         'before_value' => null,
