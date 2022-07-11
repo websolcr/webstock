@@ -32,8 +32,8 @@
           :key="dropdownKey"
           v-model="selectedAreas"
           button-text="areas"
-          label="area"
-          track-by="id"
+          label="value"
+          track-by="key"
           :dataset="areas"
         />
 
@@ -41,8 +41,8 @@
           :key="dropdownKey"
           v-model="selectedActions"
           button-text="actions"
-          label="action"
-          track-by="id"
+          label="value"
+          track-by="key"
           :dataset="actions"
         />
 
@@ -87,10 +87,9 @@ import PaginationBar from "@/components/common/pagination/PaginationBar"
 import MultiselectDropdown from "@/components/common/MultiselectDropdown"
 
 const INITIAL_FILTERS = {
-  members: [],
-  areas: [],
-  actions: [],
-  perPage: 10,
+  member: [],
+  area: [],
+  action: [],
 }
 
 const INITIAL_PAGINATION = {
@@ -126,36 +125,36 @@ export default {
   computed: {
     selectedMembers: {
       get() {
-        return this.filters.members
+        return this.filters.member
       },
       set(members) {
         this.filters = {
           ...this.filters,
-          members: [...members].map(member => member.id)
+          member: [...members].map(member => member.id)
         }
       },
     },
 
     selectedAreas: {
       get() {
-        return this.filters.areas
+        return this.filters.area
       },
       set(areas) {
         this.filters = {
           ...this.filters,
-          areas: [...areas].map(area => area.area)
+          area: [...areas].map(area => area.key)
         }
       },
     },
 
     selectedActions: {
       get() {
-        return this.filters.actions
+        return this.filters.action
       },
       set(actions) {
         this.filters = {
           ...this.filters,
-          actions: [...actions].map(action => action.action)
+          action: [...actions].map(action => action.key)
         }
       }
     },
@@ -165,14 +164,24 @@ export default {
     },
   },
 
-  async created() {
-    await this.fetchAudits()
-    await this.fetchMembers()
-    await this.fetchActions()
-    await this.fetchAreas()
+  created() {
+    this.fetchAudits()
+    this.fetchMembers()
+    this.fetchFilters()
   },
 
   methods: {
+    async fetchFilters() {
+      this.$wait.start('fetch-filters')
+
+      const { data } = await this.$http.get('audit-filters')
+
+      this.areas = data.areas
+      this.actions = data.actions
+
+      this.$wait.end('fetch-filters')
+    },
+
     async fetchAudits() {
       this.$wait.start('fetch-audits')
 
@@ -201,44 +210,6 @@ export default {
       this.members = data
 
       this.$wait.end('fetch-members')
-    },
-
-    async fetchActions() {
-      this.$wait.start('fetch-actions')
-
-      const { data } = await this.$http.get('audit-data', {
-        params: {
-          filter: 'actions'
-        }
-      })
-
-      this.actions = Object.keys(data).map(key => {
-        return {
-          id: key,
-          action: data[key]
-        }
-      })
-
-      this.$wait.end('fetch-actions')
-    },
-
-    async fetchAreas() {
-      this.$wait.start('fetch-areas')
-
-      const { data } = await this.$http.get('audit-data', {
-        params: {
-          filter: 'areas'
-        }
-      })
-
-      this.areas = Object.keys(data).map(key => {
-        return {
-          id: key,
-          area: data[key]
-        }
-      })
-
-      this.$wait.end('fetch-areas')
     },
 
     setPerPage(perPage) {

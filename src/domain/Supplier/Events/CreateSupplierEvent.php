@@ -2,13 +2,17 @@
 
 namespace Domain\Supplier\Events;
 
+use Support\Audit\AuditArea;
+use Support\Audit\AuditAction;
 use Domain\Supplier\Models\Supplier;
 use Domain\Audit\Interfaces\AuditableEvent;
 
-class SaveSupplierEvent implements AuditableEvent
+class CreateSupplierEvent implements AuditableEvent
 {
     public function __construct(
-        public Supplier $supplier,
+        protected Supplier $supplier,
+        protected AuditArea $area,
+        protected AuditAction $action
     ) {
     }
 
@@ -17,14 +21,14 @@ class SaveSupplierEvent implements AuditableEvent
         return authMember()->id;
     }
 
-    public function area(): string
+    public function area(): AuditArea
     {
-        return 'supplier';
+        return $this->area;
     }
 
-    public function action(): string
+    public function action(): AuditAction
     {
-        return 'create';
+        return $this->action;
     }
 
     public function beforeValue(): ?string
@@ -34,6 +38,6 @@ class SaveSupplierEvent implements AuditableEvent
 
     public function afterValue(): ?string
     {
-        return $this->supplier->toJson();
+        return $this->supplier->name;
     }
 }

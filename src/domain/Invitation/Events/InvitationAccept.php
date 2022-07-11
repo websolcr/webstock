@@ -3,7 +3,8 @@
 namespace Domain\Invitation\Events;
 
 use App\Models\User;
-use function tenant;
+use Support\Audit\AuditArea;
+use Support\Audit\AuditAction;
 use Domain\Member\Models\Member;
 use Illuminate\Queue\SerializesModels;
 use Domain\Invitation\Models\Invitation;
@@ -38,14 +39,14 @@ class InvitationAccept implements ShouldBroadcast, AuditableEvent
         return Member::where('global_id', $this->user->id)->first()->id;
     }
 
-    public function area(): string
+    public function area(): AuditArea
     {
-        return 'invitation';
+        return AuditArea::INVITATION;
     }
 
-    public function action(): string
+    public function action(): AuditAction
     {
-        return 'accept';
+        return AuditAction::ACCEPT;
     }
 
     public function beforeValue(): ?string

@@ -8,8 +8,8 @@ class SupplierData
         public string $name,
         public string $email,
         public string $address,
-        public string $primaryContactNumber,
-        public ?string $secondaryContactNumber,
+        public string $primaryContactNo,
+        public ?string $secondaryContactNo,
         public ?string $id = null,
     ) {
     }
