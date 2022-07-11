@@ -3,8 +3,8 @@
 namespace Domain\Invitation\Models;
 
 use App\Models\BaseModel;
+use Database\Factories\InvitationFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Domain\Invitation\Factories\InvitationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Stancl\Tenancy\Database\Concerns\CentralConnection;
 

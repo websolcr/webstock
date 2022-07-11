@@ -12,8 +12,8 @@ return new class extends Migration {
             $table->foreignUuid('member_id')->constrained();
             $table->string('area');
             $table->string('action');
-            $table->string('before_value')->nullable();
-            $table->string('after_value')->nullable();
+            $table->text('before_value')->nullable();
+            $table->text('after_value')->nullable();
             $table->timestamps();
         });
     }

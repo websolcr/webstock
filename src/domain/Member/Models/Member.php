@@ -3,9 +3,8 @@
 namespace Domain\Member\Models;
 
 use App\HasUuid;
-use function auth;
 use App\Models\BaseModel;
-use Domain\Member\Factories\MemberFactory;
+use Database\Factories\MemberFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

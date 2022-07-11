@@ -5,7 +5,7 @@ namespace Domain\Audit\Models;
 use App\HasUuid;
 use App\Models\BaseModel;
 use Domain\Member\Models\Member;
-use Domain\Audit\Factories\AuditFactory;
+use Database\Factories\AuditFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

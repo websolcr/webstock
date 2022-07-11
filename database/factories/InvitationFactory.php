@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Invitation\Factories;
+namespace Database\Factories;
 
 use function tenant;
 use Illuminate\Support\Str;

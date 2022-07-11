@@ -11,11 +11,14 @@ class AuditData
             'login',
             'logout',
             'switch',
+            'create',
+            'update',
         ],
 
         'areas' => [
             'organization',
             'invitation',
+            'supplier',
         ],
     ];
 }

@@ -7,6 +7,7 @@ import UserManagement from "@/views/UserManagement"
 import WithoutTenantLayout from "@/layout/WithoutTenantLayout"
 import CreateOrganization from "@/views/organization/OrganizationCreate"
 import OrganizationIndex from "@/views/organization/OrganizationIndex"
+import Suppliers from "@/views/Suppliers"
 import Dashboard from "@/views/Dashboard"
 
 const routes = [
@@ -48,7 +49,12 @@ const routes = [
         path: '/audits',
         name: 'Audits',
         component: Audits
-      }
+      },
+      {
+        path: '/suppliers',
+        name: 'Suppliers',
+        component: Suppliers
+      },
     ]
   },
 ]

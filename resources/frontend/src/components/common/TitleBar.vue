@@ -6,7 +6,7 @@
       />
     </div>
 
-    <div>
+    <div class="space-x-2">
       <slot
         name="top-buttons"
       />
