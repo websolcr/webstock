@@ -27,9 +27,13 @@ class SuppliersController extends Controller
         return response()->noContent();
     }
 
-    public function update(UpdateSupplierRequest $request, MultipleSuppliersUpdateAction $multipleSuppliersUpdateAction): Response
-    {
-        DB::transaction(fn () => $multipleSuppliersUpdateAction->execute($request->modifiedSuppliers()));
+    public function update(
+        UpdateSupplierRequest $request,
+        MultipleSuppliersUpdateAction $multipleSuppliersUpdateAction
+    ): Response {
+        DB::transaction(
+            fn () => $multipleSuppliersUpdateAction->execute($request->modifiedSuppliers())
+        );
 
         return response()->noContent();
     }

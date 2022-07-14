@@ -3,7 +3,7 @@
 use Domain\Supplier\Models\Supplier;
 use Illuminate\Support\Facades\Event;
 use Domain\Audit\Listeners\SaveOnAudit;
-use Domain\Supplier\Events\SaveSupplierEvent;
+use Domain\Supplier\Events\CreateSupplierEvent;
 
 beforeEach(fn () => beginTestInsideTenant());
 
@@ -20,7 +20,7 @@ test('can list all suppliers', function () {
 });
 
 test('can store supplier', function () {
-    Event::fake([SaveSupplierEvent::class]);
+    Event::fake([CreateSupplierEvent::class]);
 
     $data = [
         'name' => 'Christophe Eichmann IV',
@@ -31,7 +31,7 @@ test('can store supplier', function () {
 
     $this->postJson('api/suppliers', $data);
 
-    Event::assertListening(SaveSupplierEvent::class, SaveOnAudit::class);
+    Event::assertListening(CreateSupplierEvent::class, SaveOnAudit::class);
 
     $this->assertDatabaseHas('suppliers', [...$data]);
 });
@@ -50,25 +50,23 @@ test('can update multiple suppliers', function () {
 
     $supplier1Data = [
         'id' => $supplier1->id,
-        'name' => $supplier1->name,
-        'email' => $supplier1->email,
-        'address' => $supplier1->address,
-        'primary_contact_no' => $supplier1->primary_contact_no,
-        'secondary_contact_no' => $supplier1->secondary_contact_no,
+        'name' => 'supplier 1 name',
+        'email' => 'supllier1@test.com',
+        'address' => 'supplier 1 address',
+        'primary_contact_no' => '+94 23 2123567',
     ];
 
     $supplier2Data = [
         'id' => $supplier2->id,
-        'name' => $supplier2->name,
-        'email' => $supplier2->email,
-        'address' => $supplier2->address,
-        'primary_contact_no' => $supplier2->primary_contact_no,
-        'secondary_contact_no' => $supplier2->secondary_contact_no,
+        'name' => 'supplier 2 name',
+        'email' => 'supplier2@test.com',
+        'address' => 'supplier 2 address',
+        'primary_contact_no' => '+98 78 6789 780',
     ];
 
     $this->putJson('api/suppliers/', ['modifiedSuppliers' => [
-        ...$supplier1Data,
-        ...$supplier2Data,
+        $supplier1Data,
+        $supplier2Data,
     ]]);
 
     collect([$supplier1Data, $supplier2Data])->each(function (array $modifiedData) {

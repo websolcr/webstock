@@ -31,8 +31,8 @@ class UpdateSupplierRequest extends FormRequest
                 name: $supplier['name'],
                 email: $supplier['email'],
                 address: $supplier['address'],
-                primaryContactNumber: $supplier['primary_contact_no'],
-                secondaryContactNumber: $supplier['secondary_contact_no'],
+                primaryContactNo: $supplier['primary_contact_no'],
+                secondaryContactNo: $supplier['secondary_contact_no'] ?? null,
                 id: $supplier['id'],
             );
         });

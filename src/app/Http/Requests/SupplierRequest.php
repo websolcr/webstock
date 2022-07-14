@@ -29,8 +29,8 @@ class SupplierRequest extends FormRequest
             name: $this->input('name'),
             email: $this->input('email'),
             address: $this->input('address'),
-            primaryContactNumber: $this->input('primary_contact_no'),
-            secondaryContactNumber: $this->input('secondary_contact_no')
+            primaryContactNo: $this->input('primary_contact_no'),
+            secondaryContactNo: $this->input('secondary_contact_no')
         );
     }
 }

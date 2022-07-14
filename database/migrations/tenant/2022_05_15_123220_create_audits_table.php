@@ -10,8 +10,9 @@ return new class extends Migration {
         Schema::create('audits', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('member_id')->constrained();
-            $table->string('area');
-            $table->string('action');
+            $table->unsignedSmallInteger('area');
+            $table->unsignedSmallInteger('action');
+            $table->string('updated_field')->nullable();
             $table->text('before_value')->nullable();
             $table->text('after_value')->nullable();
             $table->timestamps();

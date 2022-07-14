@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use Support\Audit\AuditArea;
+use Support\Audit\AuditAction;
 use Domain\Member\Models\Member;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
@@ -37,8 +39,8 @@ test('can send invitation', function () {
 
     $this->assertDatabaseHas('audits', [
         'member_id' => Member::where('global_id', auth()->id())->first()->id,
-        'area' => 'invitation',
-        'action' => 'send',
+        'area' => AuditArea::INVITATION->value,
+        'action' => AuditAction::SEND->value,
         'before_value' => null,
         'after_value' => $receiver,
     ]);
@@ -144,8 +146,8 @@ test('existing user becomes member after accept the invitation', function () {
 
     $this->assertDatabaseHas('audits', [
         'member_id' => Member::where('global_id', auth()->id())->first()->id,
-        'area' => 'invitation',
-        'action' => 'accept',
+        'area' => AuditArea::INVITATION->value,
+        'action' => AuditAction::ACCEPT->value,
         'before_value' => null,
         'after_value' => $user->email,
     ]);
@@ -187,8 +189,8 @@ test('non existing user becomes member after accept the invitation', function ()
 
     $this->assertDatabaseHas('audits', [
         'member_id' => Member::where('global_id', auth()->id())->first()->id,
-        'area' => 'invitation',
-        'action' => 'accept',
+        'area' => AuditArea::INVITATION->value,
+        'action' => AuditAction::ACCEPT->value,
         'before_value' => null,
         'after_value' => $invitation->email,
     ]);

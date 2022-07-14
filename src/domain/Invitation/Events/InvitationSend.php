@@ -3,6 +3,8 @@
 namespace Domain\Invitation\Events;
 
 use function tenant;
+use Support\Audit\AuditArea;
+use Support\Audit\AuditAction;
 use Illuminate\Queue\SerializesModels;
 use Domain\Invitation\Models\Invitation;
 use Domain\Audit\Interfaces\AuditableEvent;
@@ -35,14 +37,14 @@ class InvitationSend implements ShouldBroadcast, AuditableEvent
         return authMember()->id;
     }
 
-    public function area(): string
+    public function area(): AuditArea
     {
-        return 'invitation';
+        return AuditArea::INVITATION;
     }
 
-    public function action(): string
+    public function action(): AuditAction
     {
-        return 'send';
+        return AuditAction::SEND;
     }
 
     public function beforeValue(): ?string

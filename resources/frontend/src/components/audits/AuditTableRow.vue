@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
 .audit-table-row-item {
-  @apply text-xs;
+  @apply text-sm;
   @apply w-1/6;
   @apply border-b;
   @apply border-blue-200;
